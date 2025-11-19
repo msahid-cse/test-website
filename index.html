@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Test Page - SQA Testing</title>
     <style>
-        * {box-sizing: border-box;}
+        * {box-sizing: border-box; margin: 0; padding: 0;}
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            margin: 0;
+        }
+        .main-content {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,7 +27,7 @@
         .container {
             background: #fff;
             border-radius: 11px;
-            box-shadow: 0 12px 30px rgba(0,0,0,.16);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
             width: 100%;
             max-width: 420px;
             padding: 35px 24px;
@@ -37,286 +45,581 @@
         .credentials-box strong {
             color: #764ba2;
         }
-        .header{text-align:center;margin-bottom:28px;}
-        .header h1{color:#333;font-size:26px;margin-bottom:7px;}
-        .header p{color:#666;font-size:14px;}
-        .form-group{margin-bottom:20px;}
-        label{display:block;font-weight:600;color:#333;margin-bottom:8px;font-size:14px;}
-        .input-wrapper{position:relative;}
-        input[type="email"],input[type="password"],input[type="text"]{
-            width:100%;padding:12px 15px;border:2px solid #e0e0e0;
-            border-radius:6px;font-size:15px;transition:all .3s;outline:none;
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
         }
-        input:focus{border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,.13);}
-        .password-wrapper{position:relative;}
-        .password-wrapper input{padding-right:45px;}
-        .toggle-password{
-            position:absolute;right:12px;top:50%;transform:translateY(-50%);
-            cursor:pointer;background:none;border:none;color:#666;
-            font-size:20px;padding:5px;user-select:none;
+        .header h1 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 7px;
         }
-        .toggle-password:hover{color:#667eea;}
-        .error-message{background:#fee;color:#c33;padding:12px;border-radius:6px;
-            margin-bottom:18px;font-size:14px;display:none;
-            border-left:4px solid #c33;}
-        .error-message.show{display:block;}
-        .success-message{background:#efe;color:#3c3;padding:12px;border-radius:6px;
-            margin-bottom:18px;font-size:14px;display:none;
-            border-left:4px solid #3c3;}
-        .success-message.show{display:block;}
-        button[type="submit"]{
-            width:100%;padding:14px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-            color:#fff;border:none;border-radius:6px;font-size:16px;font-weight:600;
-            cursor:pointer;transition:all .3s;margin-bottom:12px;
+        .header p {
+            color: #666;
+            font-size: 14px;
         }
-        button[type="submit"]:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(102,126,234,.23);}
-        .forgot-password{text-align:center;}
-        .forgot-password a{
-            color:#667eea;text-decoration:none;font-size:14px;transition:color .3s;
+        .form-group {
+            margin-bottom: 20px;
         }
-        .forgot-password a:hover{color:#764ba2;text-decoration:underline;}
-        .attempt-counter{background:#fff3cd;color:#856404;padding:10px;border-radius:6px;
-            margin-bottom:14px;font-size:13px;text-align:center;display:none;
-            border-left:4px solid #ffc107;}
-        .attempt-counter.show{display:block;}
-        .dashboard{display:none;text-align:center;}
-        .dashboard h2{color:#667eea;margin-bottom:18px;}
-        .dashboard p{color:#666;margin-bottom:18px;font-size:16px;}
-        .logout-btn{
-            padding:12px 30px;background:#dc3545;color:#fff;border:none;border-radius:6px;
-            font-size:15px;cursor:pointer;transition:all .3s;
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
-        .logout-btn:hover{background:#c82333;transform:translateY(-2px);}
-        .session-info{
-            background:#e7f3ff;padding:12px;border-radius:6px;
-            margin-top:17px;font-size:13px;color:#004085;
+        .input-wrapper {
+            position: relative;
         }
-        input.invalid{border-color:#c33!important;}
-        .input-error{color:#c33;font-size:12px;margin-top:5px;display:none;}
-        .input-error.show{display:block;}
-        @media (max-width:550px){
-            .container{max-width:100%;padding:18px;}
-            .credentials-box{font-size:13.5px;padding:13px;}
-            .dashboard h2{font-size:20px;}
-            button[type="submit"],.logout-btn{font-size:15px;}
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
         }
-        @media (max-width:400px){
-            .container{padding:7px;}
-            .header h1{font-size:19px;}
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.13);
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 20px;
+            padding: 5px;
+            user-select: none;
+        }
+        .toggle-password:hover {
+            color: #667eea;
+        }
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #c33;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #3c3;
+        }
+        .success-message.show {
+            display: block;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.23);
+        }
+        .forgot-password {
+            text-align: center;
+        }
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .forgot-password a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        .attempt-counter {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+            border-left: 4px solid #ffc107;
+        }
+        .attempt-counter.show {
+            display: block;
+        }
+        .dashboard {
+            display: none;
+            text-align: center;
+        }
+        .dashboard h2 {
+            color: #667eea;
+            margin-bottom: 18px;
+        }
+        .dashboard p {
+            color: #666;
+            margin-bottom: 18px;
+            font-size: 16px;
+        }
+        .logout-btn {
+            padding: 12px 30px;
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        .session-info {
+            background: #e7f3ff;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 17px;
+            font-size: 13px;
+            color: #004085;
+        }
+        input.invalid {
+            border-color: #c33 !important;
+        }
+        .input-error {
+            color: #c33;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .input-error.show {
+            display: block;
+        }
+        
+        /* Footer Styles */
+        .site-footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            padding: 25px 20px 15px;
+            margin-top: auto;
+            width: 100%;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .footer-developer {
+            text-align: center;
+        }
+        .footer-developer p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+        .footer-developer strong {
+            color: #3498db;
+            font-weight: 600;
+        }
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(52, 152, 219, 0.15);
+            border-radius: 6px;
+            text-decoration: none;
+            color: #3498db;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+        .footer-link:hover {
+            background: rgba(52, 152, 219, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+            border-color: #3498db;
+        }
+        .footer-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        .footer-divider {
+            width: 100%;
+            max-width: 600px;
+            height: 1px;
+            background: rgba(236, 240, 241, 0.2);
+            margin: 8px 0;
+        }
+        .footer-copyright {
+            text-align: center;
+            font-size: 13px;
+            color: #95a5a6;
+            margin-top: 5px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 550px) {
+            .container {
+                max-width: 100%;
+                padding: 18px;
+            }
+            .credentials-box {
+                font-size: 13.5px;
+                padding: 13px;
+            }
+            .dashboard h2 {
+                font-size: 20px;
+            }
+            button[type="submit"], .logout-btn {
+                font-size: 15px;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .footer-link {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+            .site-footer {
+                padding: 20px 15px 12px;
+            }
+        }
+        @media (max-width: 400px) {
+            .container {
+                padding: 7px;
+            }
+            .header h1 {
+                font-size: 19px;
+            }
+            .footer-developer p {
+                font-size: 13px;
+            }
+            .footer-copyright {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Show Test Credentials -->
-        <div class="credentials-box">
-            <strong>Email:</strong> user@test.com <br>
-            <strong>Password:</strong> Pass123!
-        </div>
-        <!-- Login Form -->
-        <div id="loginSection">
-            <div class="header">
-                <h1>Login</h1>
-                <p>SQA Test Case Implementation</p>
+    <div class="main-content">
+        <div class="container">
+            <!-- Show Test Credentials -->
+            <div class="credentials-box">
+                <strong>Email:</strong> user@test.com <br>
+                <strong>Password:</strong> Pass123!
             </div>
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
-            <div class="attempt-counter" id="attemptCounter"></div>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-wrapper">
-                        <input 
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Enter your email"
-                            autocomplete="email"
-                        >
-                        <div class="input-error" id="emailError"></div>
+            <!-- Login Form -->
+            <div id="loginSection">
+                <div class="header">
+                    <h1>Login</h1>
+                    <p>SQA Test Case Implementation</p>
+                </div>
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+                <div class="attempt-counter" id="attemptCounter"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                            >
+                            <div class="input-error" id="emailError"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="password-wrapper">
-                        <input 
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            autocomplete="current-password"
-                        >
-                        <button type="button" class="toggle-password" id="togglePassword">👁️</button>
-                        <div class="input-error" id="passwordError"></div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input 
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="toggle-password" id="togglePassword">👁️</button>
+                            <div class="input-error" id="passwordError"></div>
+                        </div>
                     </div>
+                    <button type="submit" id="loginBtn">Login</button>
+                    <div class="forgot-password">
+                        <a href="#" id="forgotPassword">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+            <!-- Dashboard (Hidden Initially) -->
+            <div id="dashboardSection" class="dashboard">
+                <h2>🎉 Dashboard / Home Page</h2>
+                <p>Welcome, <strong id="userEmail"></strong>!</p>
+                <p>You have successfully logged in to the system.</p>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+                <div class="session-info">
+                    <strong>Session Info:</strong><br>
+                    Login Time: <span id="loginTime"></span><br>
+                    Session will expire after 30 minutes of inactivity.
                 </div>
-                <button type="submit" id="loginBtn">Login</button>
-                <div class="forgot-password">
-                    <a href="#" id="forgotPassword">Forgot Password?</a>
-                </div>
-            </form>
-        </div>
-        <!-- Dashboard (Hidden Initially) -->
-        <div id="dashboardSection" class="dashboard">
-            <h2>🎉 Dashboard / Home Page</h2>
-            <p>Welcome, <strong id="userEmail"></strong>!</p>
-            <p>You have successfully logged in to the system.</p>
-            <button class="logout-btn" id="logoutBtn">Logout</button>
-            <div class="session-info">
-                <strong>Session Info:</strong><br>
-                Login Time: <span id="loginTime"></span><br>
-                Session will expire after 30 minutes of inactivity.
             </div>
         </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-developer">
+                <p>Developed by <strong>Md. Sahid</strong></p>
+                <p>SQA Test Case Implementation</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="https://msahid-cse.github.io/portfolio/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    Portfolio Website
+                </a>
+                
+                <a href="https://www.linkedin.com/in/msahid-cse/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                    </svg>
+                    LinkedIn Profile
+                </a>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-copyright">
+                <p>&copy; 2025 Md. Sahid. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        const VALID_CREDENTIALS = { email:'user@test.com', password:'Pass123!' };
-        let failedAttempts=0;
-        const MAX_ATTEMPTS=5;
-        let accountLocked=false;
-        let sessionTimeout=null;
-        const SESSION_DURATION=30*60*1000;
-        const loginForm=document.getElementById('loginForm');
-        const emailInput=document.getElementById('email');
-        const passwordInput=document.getElementById('password');
-        const togglePassword=document.getElementById('togglePassword');
-        const errorMessage=document.getElementById('errorMessage');
-        const successMessage=document.getElementById('successMessage');
-        const attemptCounter=document.getElementById('attemptCounter');
-        const loginSection=document.getElementById('loginSection');
-        const dashboardSection=document.getElementById('dashboardSection');
-        const userEmailSpan=document.getElementById('userEmail');
-        const loginTimeSpan=document.getElementById('loginTime');
-        const logoutBtn=document.getElementById('logoutBtn');
-        const emailError=document.getElementById('emailError');
-        const passwordError=document.getElementById('passwordError');
-        const forgotPasswordLink=document.getElementById('forgotPassword');
-        togglePassword.addEventListener('click',function(){
-            const type=passwordInput.getAttribute('type')==='password'?'text':'password';
-            passwordInput.setAttribute('type',type);
-            this.textContent=type==='password'?'👁️':'👁️‍🗨️';
+        const VALID_CREDENTIALS = { email: 'user@test.com', password: 'Pass123!' };
+        let failedAttempts = 0;
+        const MAX_ATTEMPTS = 5;
+        let accountLocked = false;
+        let sessionTimeout = null;
+        const SESSION_DURATION = 30 * 60 * 1000;
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const attemptCounter = document.getElementById('attemptCounter');
+        const loginSection = document.getElementById('loginSection');
+        const dashboardSection = document.getElementById('dashboardSection');
+        const userEmailSpan = document.getElementById('userEmail');
+        const loginTimeSpan = document.getElementById('loginTime');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+        
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
         });
-        function isValidEmail(email){return email.includes('@')&&email.includes('.');}
-        function sanitizeInput(input){
-            const sqlPatterns=[
+        
+        function isValidEmail(email) {
+            return email.includes('@') && email.includes('.');
+        }
+        
+        function sanitizeInput(input) {
+            const sqlPatterns = [
                 /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE)\b)/gi,
                 /(--|\#|\/\*|\*\/)/gi,
                 /('|"|;|\||&)/gi
             ];
-            for(let pattern of sqlPatterns){if(pattern.test(input)){return null;}}
+            for (let pattern of sqlPatterns) {
+                if (pattern.test(input)) {
+                    return null;
+                }
+            }
             return input;
         }
-        function showError(message){
-            errorMessage.textContent=message;
+        
+        function showError(message) {
+            errorMessage.textContent = message;
             errorMessage.classList.add('show');
             successMessage.classList.remove('show');
-            setTimeout(()=>{errorMessage.classList.remove('show');},5000);
+            setTimeout(() => { errorMessage.classList.remove('show'); }, 5000);
         }
-        function showSuccess(message){
-            successMessage.textContent=message;
+        
+        function showSuccess(message) {
+            successMessage.textContent = message;
             successMessage.classList.add('show');
             errorMessage.classList.remove('show');
-            setTimeout(()=>{successMessage.classList.remove('show');},3000);
+            setTimeout(() => { successMessage.classList.remove('show'); }, 3000);
         }
-        function updateAttemptCounter(){
-            if(failedAttempts>0&&failedAttempts<MAX_ATTEMPTS){
-                attemptCounter.textContent=`⚠️ Failed attempts: ${failedAttempts}/${MAX_ATTEMPTS}. Account will lock after ${MAX_ATTEMPTS} attempts.`;
+        
+        function updateAttemptCounter() {
+            if (failedAttempts > 0 && failedAttempts < MAX_ATTEMPTS) {
+                attemptCounter.textContent = `⚠️ Failed attempts: ${failedAttempts}/${MAX_ATTEMPTS}. Account will lock after ${MAX_ATTEMPTS} attempts.`;
                 attemptCounter.classList.add('show');
-            }
-            else if(accountLocked){
-                attemptCounter.textContent=`🔒 Account locked due to too many failed attempts. Please try again later.`;
+            } else if (accountLocked) {
+                attemptCounter.textContent = `🔒 Account locked due to too many failed attempts. Please try again later.`;
                 attemptCounter.classList.add('show');
+            } else {
+                attemptCounter.classList.remove('show');
             }
-            else{attemptCounter.classList.remove('show');}
         }
-        function startSessionTimeout(){
+        
+        function startSessionTimeout() {
             clearTimeout(sessionTimeout);
-            sessionTimeout=setTimeout(()=>{
+            sessionTimeout = setTimeout(() => {
                 showError('Session expired due to inactivity. Please login again.');
                 logout();
-            },SESSION_DURATION);
+            }, SESSION_DURATION);
         }
-        function resetSessionTimeout(){
-            if(dashboardSection.style.display!=='none'){startSessionTimeout();}
+        
+        function resetSessionTimeout() {
+            if (dashboardSection.style.display !== 'none') {
+                startSessionTimeout();
+            }
         }
-        ['mousedown','mousemove','keypress','scroll','touchstart'].forEach(event=>{
-            document.addEventListener(event,resetSessionTimeout,true);
+        
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+            document.addEventListener(event, resetSessionTimeout, true);
         });
-        function login(email,password){
-            if(accountLocked){
+        
+        function login(email, password) {
+            if (accountLocked) {
                 showError('Too many attempts. Account is temporarily locked.');
                 return false;
             }
-            if(!email.trim()||!password.trim()){
+            if (!email.trim() || !password.trim()) {
                 showError('Fields cannot be empty.');
                 return false;
             }
-            if(!isValidEmail(email)){
+            if (!isValidEmail(email)) {
                 showError('Please enter a valid email address.');
                 emailInput.classList.add('invalid');
                 return false;
             }
-            if(sanitizeInput(email)===null||sanitizeInput(password)===null){
+            if (sanitizeInput(email) === null || sanitizeInput(password) === null) {
                 showError('Invalid characters detected. Please use standard text input.');
                 return false;
             }
-            if(email===VALID_CREDENTIALS.email&&password===VALID_CREDENTIALS.password){
-                failedAttempts=0;updateAttemptCounter();showDashboard(email);return true;
-            }else{
+            if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
+                failedAttempts = 0;
+                updateAttemptCounter();
+                showDashboard(email);
+                return true;
+            } else {
                 failedAttempts++;
-                if(failedAttempts>=MAX_ATTEMPTS){
-                    accountLocked=true;
+                if (failedAttempts >= MAX_ATTEMPTS) {
+                    accountLocked = true;
                     showError('Too many attempts. Account is temporarily locked.');
-                    setTimeout(()=>{
-                        accountLocked=false;
-                        failedAttempts=0;
+                    setTimeout(() => {
+                        accountLocked = false;
+                        failedAttempts = 0;
                         updateAttemptCounter();
                         showSuccess('Account has been unlocked. You may try again.');
-                    },60000);
-                }else{showError('Invalid email or password.');}
-                updateAttemptCounter();return false;
+                    }, 60000);
+                } else {
+                    showError('Invalid email or password.');
+                }
+                updateAttemptCounter();
+                return false;
             }
         }
-        function showDashboard(email){
-            loginSection.style.display='none';
-            dashboardSection.style.display='block';
-            userEmailSpan.textContent=email;
-            loginTimeSpan.textContent=(new Date()).toLocaleString();
+        
+        function showDashboard(email) {
+            loginSection.style.display = 'none';
+            dashboardSection.style.display = 'block';
+            userEmailSpan.textContent = email;
+            loginTimeSpan.textContent = (new Date()).toLocaleString();
             startSessionTimeout();
         }
-        function logout(){
+        
+        function logout() {
             clearTimeout(sessionTimeout);
-            loginSection.style.display='block';
-            dashboardSection.style.display='none';
-            emailInput.value='';
-            passwordInput.value='';
+            loginSection.style.display = 'block';
+            dashboardSection.style.display = 'none';
+            emailInput.value = '';
+            passwordInput.value = '';
             emailInput.classList.remove('invalid');
             passwordInput.classList.remove('invalid');
         }
-        loginForm.addEventListener('submit',function(e){
+        
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const email=emailInput.value;
-            const password=passwordInput.value;
+            const email = emailInput.value;
+            const password = passwordInput.value;
             emailInput.classList.remove('invalid');
             passwordInput.classList.remove('invalid');
-            login(email,password);
+            login(email, password);
         });
-        logoutBtn.addEventListener('click',logout);
-        forgotPasswordLink.addEventListener('click',function(e){
+        
+        logoutBtn.addEventListener('click', logout);
+        
+        forgotPasswordLink.addEventListener('click', function(e) {
             e.preventDefault();
             showSuccess('Password reset link would be sent to your email. (Demo feature)');
         });
-        emailInput.addEventListener('blur',function(){
-            if(this.value&&!isValidEmail(this.value)){
+        
+        emailInput.addEventListener('blur', function() {
+            if (this.value && !isValidEmail(this.value)) {
                 this.classList.add('invalid');
-                emailError.textContent='Please enter a valid email address';
+                emailError.textContent = 'Please enter a valid email address';
                 emailError.classList.add('show');
-            }else{
+            } else {
                 this.classList.remove('invalid');
                 emailError.classList.remove('show');
             }
         });
-        emailInput.addEventListener('focus',function(){
+        
+        emailInput.addEventListener('focus', function() {
             this.classList.remove('invalid');
             emailError.classList.remove('show');
         });
