@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Test Page - SQA Testing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 20px;
+            padding: 5px;
+            user-select: none;
+        }
+
+        .toggle-password:hover {
+            color: #667eea;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #c33;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #3c3;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .forgot-password {
+            text-align: center;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .attempt-counter {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+            border-left: 4px solid #ffc107;
+        }
+
+        .attempt-counter.show {
+            display: block;
+        }
+
+        .dashboard {
+            display: none;
+            text-align: center;
+        }
+
+        .dashboard h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .dashboard p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            padding: 12px 30px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .session-info {
+            background: #e7f3ff;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #004085;
+        }
+
+        input.invalid {
+            border-color: #c33 !important;
+        }
+
+        .input-error {
+            color: #c33;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .input-error.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div id="loginSection">
+            <div class="header">
+                <h1>Login</h1>
+                <p>SQA Test Case Implementation</p>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            <div class="attempt-counter" id="attemptCounter"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                        >
+                        <div class="input-error" id="emailError"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            👁️
+                        </button>
+                        <div class="input-error" id="passwordError"></div>
+                    </div>
+                </div>
+
+                <button type="submit" id="loginBtn">Login</button>
+
+                <div class="forgot-password">
+                    <a href="#" id="forgotPassword">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Dashboard (Hidden Initially) -->
+        <div id="dashboardSection" class="dashboard">
+            <h2>🎉 Dashboard / Home Page</h2>
+            <p>Welcome, <strong id="userEmail"></strong>!</p>
+            <p>You have successfully logged in to the system.</p>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+            <div class="session-info">
+                <strong>Session Info:</strong><br>
+                Login Time: <span id="loginTime"></span><br>
+                Session will expire after 30 minutes of inactivity.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Valid credentials for testing (TC_LOG_01)
+        const VALID_CREDENTIALS = {
+            email: 'user@test.com',
+            password: 'Pass123!'
+        };
+
+        // Session management
+        let failedAttempts = 0;
+        const MAX_ATTEMPTS = 5;
+        let accountLocked = false;
+        let sessionTimeout = null;
+        const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes
+
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const attemptCounter = document.getElementById('attemptCounter');
+        const loginSection = document.getElementById('loginSection');
+        const dashboardSection = document.getElementById('dashboardSection');
+        const userEmailSpan = document.getElementById('userEmail');
+        const loginTimeSpan = document.getElementById('loginTime');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+
+        // TC_UI_02: Toggle Password Visibility (Eye Icon)
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+        });
+
+        // TC_LOG_05: Email format validation
+        function isValidEmail(email) {
+            return email.includes('@') && email.includes('.');
+        }
+
+        // TC_SEC_03: SQL Injection protection
+        function sanitizeInput(input) {
+            const sqlPatterns = [
+                /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE)\b)/gi,
+                /(--|\#|\/\*|\*\/)/gi,
+                /('|"|;|\||&)/gi
+            ];
+            
+            for (let pattern of sqlPatterns) {
+                if (pattern.test(input)) {
+                    return null; // Reject suspicious input
+                }
+            }
+            return input;
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            successMessage.classList.remove('show');
+            
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.classList.add('show');
+            errorMessage.classList.remove('show');
+            
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        // TC_SEC_02: Update attempt counter
+        function updateAttemptCounter() {
+            if (failedAttempts > 0 && failedAttempts < MAX_ATTEMPTS) {
+                attemptCounter.textContent = `⚠️ Failed attempts: ${failedAttempts}/${MAX_ATTEMPTS}. Account will lock after ${MAX_ATTEMPTS} attempts.`;
+                attemptCounter.classList.add('show');
+            } else if (accountLocked) {
+                attemptCounter.textContent = `🔒 Account locked due to too many failed attempts. Please try again later.`;
+                attemptCounter.classList.add('show');
+            } else {
+                attemptCounter.classList.remove('show');
+            }
+        }
+
+        // TC_SEC_04: Session timeout management
+        function startSessionTimeout() {
+            clearTimeout(sessionTimeout);
+            sessionTimeout = setTimeout(() => {
+                showError('Session expired due to inactivity. Please login again.');
+                logout();
+            }, SESSION_DURATION);
+        }
+
+        // Reset session timeout on user activity
+        function resetSessionTimeout() {
+            if (dashboardSection.style.display !== 'none') {
+                startSessionTimeout();
+            }
+        }
+
+        // Add activity listeners for session management
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+            document.addEventListener(event, resetSessionTimeout, true);
+        });
+
+        // Login function
+        function login(email, password) {
+            // TC_SEC_02: Check if account is locked
+            if (accountLocked) {
+                showError('Too many attempts. Account is temporarily locked.');
+                return false;
+            }
+
+            // TC_LOG_04: Check for empty fields
+            if (!email.trim() || !password.trim()) {
+                showError('Fields cannot be empty.');
+                return false;
+            }
+
+            // TC_LOG_05: Validate email format
+            if (!isValidEmail(email)) {
+                showError('Please enter a valid email address.');
+                emailInput.classList.add('invalid');
+                return false;
+            }
+
+            // TC_SEC_03: Check for SQL injection attempts
+            if (sanitizeInput(email) === null || sanitizeInput(password) === null) {
+                showError('Invalid characters detected. Please use standard text input.');
+                return false;
+            }
+
+            // TC_LOG_01, TC_LOG_02, TC_LOG_03: Validate credentials
+            if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
+                // Success
+                failedAttempts = 0;
+                updateAttemptCounter();
+                showDashboard(email);
+                return true;
+            } else {
+                // TC_LOG_02 & TC_LOG_03: Invalid credentials
+                failedAttempts++;
+                
+                if (failedAttempts >= MAX_ATTEMPTS) {
+                    accountLocked = true;
+                    showError('Too many attempts. Account is temporarily locked.');
+                    // In a real app, this would require server-side unlocking
+                    // For demo purposes, unlock after 60 seconds
+                    setTimeout(() => {
+                        accountLocked = false;
+                        failedAttempts = 0;
+                        updateAttemptCounter();
+                        showSuccess('Account has been unlocked. You may try again.');
+                    }, 60000);
+                } else {
+                    showError('Invalid email or password.');
+                }
+                
+                updateAttemptCounter();
+                return false;
+            }
+        }
+
+        // Show dashboard
+        function showDashboard(email) {
+            loginSection.style.display = 'none';
+            dashboardSection.style.display = 'block';
+            userEmailSpan.textContent = email;
+            
+            const now = new Date();
+            loginTimeSpan.textContent = now.toLocaleString();
+            
+            // TC_SEC_04: Start session timeout
+            startSessionTimeout();
+        }
+
+        // Logout function
+        function logout() {
+            clearTimeout(sessionTimeout);
+            loginSection.style.display = 'block';
+            dashboardSection.style.display = 'none';
+            emailInput.value = '';
+            passwordInput.value = '';
+            emailInput.classList.remove('invalid');
+            passwordInput.classList.remove('invalid');
+        }
+
+        // TC_LOG_06: Form submission (handles both button click and Enter key)
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            
+            // Clear previous validation states
+            emailInput.classList.remove('invalid');
+            passwordInput.classList.remove('invalid');
+            
+            login(email, password);
+        });
+
+        // Logout button
+        logoutBtn.addEventListener('click', logout);
+
+        // Forgot password link
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSuccess('Password reset link would be sent to your email. (Demo feature)');
+        });
+
+        // TC_UI_01: Tab order is handled automatically by browser
+        // Order: Email -> Password -> Login Button -> Forgot Password
+        // This is inherently functional with proper HTML structure
+
+        // Real-time email validation
+        emailInput.addEventListener('blur', function() {
+            if (this.value && !isValidEmail(this.value)) {
+                this.classList.add('invalid');
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.classList.add('show');
+            } else {
+                this.classList.remove('invalid');
+                emailError.classList.remove('show');
+            }
+        });
+
+        emailInput.addEventListener('focus', function() {
+            this.classList.remove('invalid');
+            emailError.classList.remove('show');
+        });
+
+        // Initialize
+        console.log('=== SQA Test Page Loaded ===');
+        console.log('Valid Test Credentials:');
+        console.log('Email: user@test.com');
+        console.log('Password: Pass123!');
+        console.log('========================');
+    </script>
+</body>
+</html>
