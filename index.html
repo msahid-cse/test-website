@@ -3,626 +3,1071 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Test Page - SQA Testing</title>
+    <title>University Student Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {box-sizing: border-box; margin: 0; padding: 0;}
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-        }
-        .container {
-            background: #fff;
-            border-radius: 11px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
-            width: 100%;
-            max-width: 420px;
-            padding: 35px 24px;
-            margin: 12px;
-        }
-        .credentials-box {
-            background: #e7f3ff;
-            border-left: 4px solid #667eea;
-            border-radius: 7px;
-            padding: 16px;
-            margin-bottom: 19px;
-            font-size: 15px;
-            color: #263673;
-        }
-        .credentials-box strong {
-            color: #764ba2;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 28px;
-        }
-        .header h1 {
-            color: #333;
-            font-size: 26px;
-            margin-bottom: 7px;
-        }
-        .header p {
-            color: #666;
-            font-size: 14px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        .input-wrapper {
-            position: relative;
-        }
-        input[type="email"], input[type="password"], input[type="text"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 15px;
-            transition: all 0.3s;
-            outline: none;
-        }
-        input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.13);
-        }
-        .password-wrapper {
-            position: relative;
-        }
-        .password-wrapper input {
-            padding-right: 45px;
-        }
-        .toggle-password {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 20px;
-            padding: 5px;
-            user-select: none;
-        }
-        .toggle-password:hover {
-            color: #667eea;
-        }
-        .error-message {
-            background: #fee;
-            color: #c33;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 18px;
-            font-size: 14px;
-            display: none;
-            border-left: 4px solid #c33;
-        }
-        .error-message.show {
-            display: block;
-        }
-        .success-message {
-            background: #efe;
-            color: #3c3;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 18px;
-            font-size: 14px;
-            display: none;
-            border-left: 4px solid #3c3;
-        }
-        .success-message.show {
-            display: block;
-        }
-        button[type="submit"] {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 12px;
-        }
-        button[type="submit"]:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.23);
-        }
-        .forgot-password {
-            text-align: center;
-        }
-        .forgot-password a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-        .forgot-password a:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-        .attempt-counter {
-            background: #fff3cd;
-            color: #856404;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 14px;
-            font-size: 13px;
-            text-align: center;
-            display: none;
-            border-left: 4px solid #ffc107;
-        }
-        .attempt-counter.show {
-            display: block;
-        }
-        .dashboard {
-            display: none;
-            text-align: center;
-        }
-        .dashboard h2 {
-            color: #667eea;
-            margin-bottom: 18px;
-        }
-        .dashboard p {
-            color: #666;
-            margin-bottom: 18px;
-            font-size: 16px;
-        }
-        .logout-btn {
-            padding: 12px 30px;
-            background: #dc3545;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .logout-btn:hover {
-            background: #c82333;
-            transform: translateY(-2px);
-        }
-        .session-info {
-            background: #e7f3ff;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 17px;
-            font-size: 13px;
-            color: #004085;
-        }
-        input.invalid {
-            border-color: #c33 !important;
-        }
-        .input-error {
-            color: #c33;
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-        .input-error.show {
-            display: block;
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Footer Styles */
-        .site-footer {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: #ecf0f1;
-            padding: 25px 20px 15px;
-            margin-top: auto;
-            width: 100%;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #0F172A;
+            color: #E2E8F0;
+        }
+        
+        body.dark-mode .card {
+            background-color: #1E293B;
+            border-color: #334155;
+        }
+        
+        body.dark-mode .navbar {
+            background-color: #1E293B;
+            border-color: #334155;
+        }
+        
+        body.dark-mode .sidebar {
+            background-color: #1E293B;
+            border-color: #334155;
+        }
+        
+        body.dark-mode .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        body.dark-mode .modal-content {
+            background-color: #1E293B;
+            color: #E2E8F0;
+        }
+        
+        /* Light Mode */
+        body.light-mode {
+            background-color: #F8FAFC;
+            color: #1E293B;
+        }
+        
+        body.light-mode .card {
+            background-color: #FFFFFF;
+            border-color: #E2E8F0;
+        }
+        
+        body.light-mode .navbar {
+            background-color: #FFFFFF;
+            border-color: #E2E8F0;
+        }
+        
+        body.light-mode .sidebar {
+            background-color: #FFFFFF;
+            border-color: #E2E8F0;
+        }
+        
+        .card {
+            border-radius: 12px;
+            border: 1px solid currentColor;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .navbar {
+            border-bottom: 1px solid currentColor;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar {
+            border-right: 1px solid currentColor;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .menu-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            padding: 12px 16px;
+            margin: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .footer-developer {
-            text-align: center;
+        
+        .menu-item:hover {
+            background-color: #7C3AED;
+            color: white;
         }
-        .footer-developer p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #bdc3c7;
-        }
-        .footer-developer strong {
-            color: #3498db;
+        
+        .menu-item.active {
+            background-color: #0F3A7D;
+            color: white;
             font-weight: 600;
         }
-        .footer-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .footer-link {
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
-            background: rgba(52, 152, 219, 0.15);
-            border-radius: 6px;
-            text-decoration: none;
-            color: #3498db;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(52, 152, 219, 0.3);
         }
-        .footer-link:hover {
-            background: rgba(52, 152, 219, 0.25);
+        
+        .btn-primary {
+            background-color: #0F3A7D;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0A2851;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
-            border-color: #3498db;
+            box-shadow: 0 4px 8px rgba(15, 58, 125, 0.3);
         }
-        .footer-link svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
+        
+        .btn-secondary {
+            background-color: #7C3AED;
+            color: white;
         }
-        .footer-divider {
+        
+        .btn-secondary:hover {
+            background-color: #6D28D9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #EF4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #DC2626;
+        }
+        
+        .btn-success {
+            background-color: #10B981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #059669;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            max-width: 600px;
-            height: 1px;
-            background: rgba(236, 240, 241, 0.2);
-            margin: 8px 0;
+            padding: 10px 12px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
         }
-        .footer-copyright {
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0F3A7D;
+            box-shadow: 0 0 0 3px rgba(15, 58, 125, 0.1);
+        }
+        
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-backdrop.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.3s ease;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 100;
+            animation: slideInUp 0.3s ease;
+        }
+        
+        .toast-success {
+            background-color: #10B981;
+        }
+        
+        .toast-error {
+            background-color: #EF4444;
+        }
+        
+        .toast-info {
+            background-color: #3B82F6;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #0F3A7D 0%, #7C3AED 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
             text-align: center;
-            font-size: 13px;
-            color: #95a5a6;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0F3A7D 0%, #7C3AED 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background-color: #DCFCE7;
+            color: #166534;
+        }
+        
+        .badge-warning {
+            background-color: #FEF3C7;
+            color: #92400E;
+        }
+        
+        .badge-danger {
+            background-color: #FEE2E2;
+            color: #991B1B;
+        }
+        
+        .badge-info {
+            background-color: #DBEAFE;
+            color: #1E40AF;
+        }
+        
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 60px;
+                width: 250px;
+                height: calc(100vh - 60px);
+                z-index: 40;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        
+        /* A4 Admit Card Styles */
+        .admit-card-container {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admit-card {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            color: #000;
+            padding: 40px;
+            border: 1px solid #333;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .admit-card::before {
+            content: 'ADMIT CARD';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 100px;
+            opacity: 0.05;
+            z-index: 0;
+            white-space: nowrap;
+        }
+        
+        .admit-card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .admit-card-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+        
+        .admit-card-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0F3A7D;
+            margin-bottom: 5px;
+        }
+        
+        .admit-card-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .admit-card-body {
+            margin-bottom: 30px;
+        }
+        
+        .admit-card-section {
+            margin-bottom: 20px;
+        }
+        
+        .admit-card-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .admit-card-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 12px;
+        }
+        
+        .admit-card-value {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .admit-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+        
+        .signature-box {
+            text-align: center;
+            width: 100px;
+        }
+        
+        .signature-line {
+            border-top: 1px solid #333;
+            font-size: 11px;
+            color: #666;
             margin-top: 5px;
         }
         
-        /* Responsive Design */
-        @media (max-width: 550px) {
-            .container {
-                max-width: 100%;
-                padding: 18px;
+        @media print {
+            * {
+                background: white !important;
+                color: black !important;
             }
-            .credentials-box {
-                font-size: 13.5px;
-                padding: 13px;
+            
+            .admit-card {
+                box-shadow: none;
+                max-width: 210mm;
+                max-height: 297mm;
             }
-            .dashboard h2 {
-                font-size: 20px;
-            }
-            button[type="submit"], .logout-btn {
-                font-size: 15px;
-            }
-            .footer-links {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .footer-link {
-                width: 100%;
-                max-width: 250px;
-                justify-content: center;
-            }
-            .site-footer {
-                padding: 20px 15px 12px;
+            
+            .no-print {
+                display: none !important;
             }
         }
-        @media (max-width: 400px) {
-            .container {
-                padding: 7px;
-            }
-            .header h1 {
-                font-size: 19px;
-            }
-            .footer-developer p {
-                font-size: 13px;
-            }
-            .footer-copyright {
-                font-size: 12px;
-            }
+        
+        .password-strength {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
         }
+        
+        .strength-bar {
+            flex: 1;
+            height: 4px;
+            background-color: #E5E7EB;
+            border-radius: 2px;
+        }
+        
+        .strength-bar.weak { background-color: #EF4444; }
+        .strength-bar.medium { background-color: #F59E0B; }
+        .strength-bar.strong { background-color: #10B981; }
     </style>
 </head>
-<body>
-    <div class="main-content">
-        <div class="container">
-            <!-- Show Test Credentials -->
-            <div class="credentials-box">
-                <strong>Email:</strong> user@test.com <br>
-                <strong>Password:</strong> Pass123!
-            </div>
-            <!-- Login Form -->
-            <div id="loginSection">
-                <div class="header">
-                    <h1>Login</h1>
-                    <p>SQA Test Case Implementation</p>
-                </div>
-                <div class="error-message" id="errorMessage"></div>
-                <div class="success-message" id="successMessage"></div>
-                <div class="attempt-counter" id="attemptCounter"></div>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <div class="input-wrapper">
-                            <input 
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Enter your email"
-                                autocomplete="email"
-                            >
-                            <div class="input-error" id="emailError"></div>
+<body class="light-mode">
+    <!-- Login Page -->
+    <div id="loginPage" class="hidden">
+        <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+            <div class="w-full max-w-md">
+                <div class="card">
+                    <div class="text-center mb-8">
+                        <div class="text-4xl mb-3">🎓</div>
+                        <h1 class="text-3xl font-bold text-blue-900 mb-2">Student Portal</h1>
+                        <p class="text-gray-600">University Management System</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h2 class="text-lg font-bold mb-4">Login</h2>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" id="studentId" placeholder="STU001" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="password" placeholder="Enter password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-full">Sign In</button>
+                        </form>
+                    </div>
+                    
+                    <div class="border-t pt-6">
+                        <h3 class="font-bold mb-3">Demo Accounts</h3>
+                        <div class="text-sm space-y-1">
+                            <p><strong>All IDs:</strong> STU001 - STU005</p>
+                            <p><strong>All Passwords:</strong> 123456</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="password-wrapper">
-                            <input 
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
-                            >
-                            <button type="button" class="toggle-password" id="togglePassword">👁️</button>
-                            <div class="input-error" id="passwordError"></div>
-                        </div>
+                    
+                    <div class="mt-6">
+                        <button type="button" onclick="showRegisterModal()" class="btn btn-secondary w-full">Create New Account</button>
                     </div>
-                    <button type="submit" id="loginBtn">Login</button>
-                    <div class="forgot-password">
-                        <a href="#" id="forgotPassword">Forgot Password?</a>
-                    </div>
-                </form>
-            </div>
-            <!-- Dashboard (Hidden Initially) -->
-            <div id="dashboardSection" class="dashboard">
-                <h2>🎉 Dashboard / Home Page</h2>
-                <p>Welcome, <strong id="userEmail"></strong>!</p>
-                <p>You have successfully logged in to the system.</p>
-                <button class="logout-btn" id="logoutBtn">Logout</button>
-                <div class="session-info">
-                    <strong>Session Info:</strong><br>
-                    Login Time: <span id="loginTime"></span><br>
-                    Session will expire after 30 minutes of inactivity.
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Footer Section -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-developer">
-                <p>Developed by <strong>Md. Sahid</strong></p>
-                <p>SQA Test Case Implementation</p>
-            </div>
-            
-            <div class="footer-links">
-                <a href="https://msahid-cse.github.io/portfolio/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                    </svg>
-                    Portfolio Website
-                </a>
-                
-                <a href="https://www.linkedin.com/in/msahid-cse/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
-                    </svg>
-                    LinkedIn Profile
-                </a>
-            </div>
-            
-            <div class="footer-divider"></div>
-            
-            <div class="footer-copyright">
-                <p>&copy; 2025 Md. Sahid. All rights reserved.</p>
-            </div>
+    
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal-backdrop">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-6">Create Account</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Student ID</label>
+                    <input type="text" id="regStudentId" placeholder="STU..." required>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="your@university.edu" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="At least 6 characters" required>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirm password" required>
+                </div>
+                <div class="flex gap-3">
+                    <button type="submit" class="btn btn-primary flex-1">Register</button>
+                    <button type="button" onclick="closeRegisterModal()" class="btn bg-gray-300 flex-1">Cancel</button>
+                </div>
+            </form>
         </div>
-    </footer>
+    </div>
+    
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="hidden h-screen flex flex-col">
+        <!-- Navbar -->
+        <nav class="navbar flex items-center justify-between px-6 py-4 sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <button id="mobileMenuToggle" class="lg:hidden text-2xl">☰</button>
+                <h1 class="text-2xl font-bold text-blue-900">Student Portal</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="themeToggle" class="btn bg-gray-200 p-2">🌙</button>
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="font-semibold" id="userName">Student</p>
+                        <p class="text-sm text-gray-600" id="userProgram">Program</p>
+                    </div>
+                    <div class="avatar" id="userAvatar">ST</div>
+                </div>
+                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+            </div>
+        </nav>
+        
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="w-64 sidebar hidden lg:block overflow-y-auto">
+                <div class="p-4">
+                    <h3 class="text-sm font-bold text-gray-600 mb-4">MENU</h3>
+                    <nav class="space-y-2">
+                        <a href="#" class="menu-item active" data-page="dashboard">📊 Dashboard</a>
+                        <a href="#" class="menu-item" data-page="results">📈 Results</a>
+                        <a href="#" class="menu-item" data-page="billing">💳 Billing</a>
+                        <a href="#" class="menu-item" data-page="courses">📚 Courses</a>
+                        <a href="#" class="menu-item" data-page="routine">📅 Class Routine</a>
+                        <a href="#" class="menu-item" data-page="faculty">👨‍🏫 Faculty</a>
+                        <a href="#" class="menu-item" data-page="admitcard">🎫 Admit Card</a>
+                        <a href="#" class="menu-item" data-page="specialexam">🧪 Special Exam</a>
+                        <a href="#" class="menu-item" data-page="programchange">🔄 Program Change</a>
+                        <a href="#" class="menu-item" data-page="profile">👤 Profile</a>
+                        <a href="#" class="menu-item" data-page="settings">⚙️ Settings</a>
+                    </nav>
+                </div>
+            </aside>
+            
+            <!-- Main Content -->
+            <main id="mainContent" class="flex-1 overflow-y-auto p-6">
+                <!-- Dashboard Page -->
+                <div id="page-dashboard" class="space-y-6">
+                    <div class="bg-gradient-to-r from-blue-900 to-purple-600 text-white p-8 rounded-12">
+                        <h1 class="text-4xl font-bold mb-2" id="dashboardWelcome">Welcome back!</h1>
+                        <p id="dashboardSubtitle">You have 15 credits remaining to graduate</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="stat-card">
+                            <div class="stat-number" id="statGPA">3.78</div>
+                            <div class="stat-label">Current GPA</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="statCredits">45</div>
+                            <div class="stat-label">Completed Credits</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="statFees">৳15,000</div>
+                            <div class="stat-label">Pending Fees</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="statSemester">4</div>
+                            <div class="stat-label">Current Semester</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h2 class="text-xl font-bold mb-4">📌 Important Announcements</h2>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-blue-600 pl-4">
+                                <p class="font-semibold">Course Registration Opens</p>
+                                <p class="text-sm text-gray-600">Spring 2025 registration starts December 1st</p>
+                            </div>
+                            <div class="border-l-4 border-orange-600 pl-4">
+                                <p class="font-semibold">Fee Payment Deadline</p>
+                                <p class="text-sm text-gray-600">Pay semester fees by December 15th</p>
+                            </div>
+                            <div class="border-l-4 border-green-600 pl-4">
+                                <p class="font-semibold">Exam Schedule</p>
+                                <p class="text-sm text-gray-600">Final exams: January 20-30, 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Page -->
+                <div id="page-results" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">📈 Results & Grades</h1>
+                    
+                    <div class="card">
+                        <h2 class="text-xl font-bold mb-4">Current Semester Results</h2>
+                        <table class="w-full text-sm">
+                            <thead class="border-b-2">
+                                <tr>
+                                    <th class="text-left py-2">Course Code</th>
+                                    <th class="text-left py-2">Course Name</th>
+                                    <th class="text-center py-2">Credits</th>
+                                    <th class="text-center py-2">Grade</th>
+                                    <th class="text-center py-2">GPA</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTable">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card">
+                            <h3 class="font-bold mb-3">📊 Current Semester GPA</h3>
+                            <p class="text-4xl font-bold text-blue-900" id="currentGPA">3.78</p>
+                        </div>
+                        <div class="card">
+                            <h3 class="font-bold mb-3">📈 Cumulative GPA</h3>
+                            <p class="text-4xl font-bold text-purple-600" id="cumulativeGPA">3.78</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <button onclick="downloadTranscript()" class="btn btn-primary">⬇️ Download Transcript</button>
+                    </div>
+                </div>
+                
+                <!-- Billing Page -->
+                <div id="page-billing" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">💳 Billing & Payments</h1>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card bg-red-50 border-red-200">
+                            <h3 class="font-bold mb-2">Outstanding Fees</h3>
+                            <p class="text-3xl font-bold text-red-600" id="pendingFeeDisplay">৳15,000</p>
+                        </div>
+                        <div class="card bg-green-50 border-green-200">
+                            <h3 class="font-bold mb-2">Total Paid</h3>
+                            <p class="text-3xl font-bold text-green-600" id="paidFeeDisplay">৳85,000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">Make Payment</h3>
+                        <form id="paymentForm">
+                            <div class="form-group">
+                                <label>Payment Method</label>
+                                <select id="paymentMethod" required>
+                                    <option>Bank Transfer</option>
+                                    <option>Card Payment</option>
+                                    <option>Mobile Banking (bKash/Nagad)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Amount (৳)</label>
+                                <input type="number" id="paymentAmount" placeholder="Enter amount" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">💰 Pay Now</button>
+                        </form>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">📋 Payment History</h3>
+                        <table class="w-full text-sm">
+                            <thead class="border-b-2">
+                                <tr>
+                                    <th class="text-left py-2">Date</th>
+                                    <th class="text-left py-2">Amount</th>
+                                    <th class="text-left py-2">Method</th>
+                                    <th class="text-left py-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentHistory">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Courses Page -->
+                <div id="page-courses" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">📚 Courses</h1>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">🔍 Available Courses</h3>
+                        <div id="coursesGrid" class="space-y-4">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">✅ Registered Courses</h3>
+                        <div id="registeredCourses" class="space-y-4">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Class Routine -->
+                <div id="page-routine" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">📅 Class Routine</h1>
+                    
+                    <div class="card">
+                        <table class="w-full text-sm">
+                            <thead class="border-b-2">
+                                <tr>
+                                    <th class="text-left py-2">Day</th>
+                                    <th class="text-left py-2">Time</th>
+                                    <th class="text-left py-2">Course</th>
+                                    <th class="text-left py-2">Instructor</th>
+                                    <th class="text-left py-2">Room</th>
+                                </tr>
+                            </thead>
+                            <tbody id="routineTable">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Faculty Page -->
+                <div id="page-faculty" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">👨‍🏫 Faculty Directory</h1>
+                    
+                    <div class="card">
+                        <input type="text" id="facultySearch" placeholder="Search faculty..." class="w-full p-2 border rounded-lg" onkeyup="filterFaculty()">
+                    </div>
+                    
+                    <div id="facultyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Admit Card Page -->
+                <div id="page-admitcard" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">🎫 Admit Card</h1>
+                    
+                    <div class="flex gap-4 mb-6 no-print">
+                        <button onclick="window.print()" class="btn btn-primary">🖨️ Print</button>
+                        <button onclick="downloadAdmitCardPDF()" class="btn btn-secondary">⬇️ Download PDF</button>
+                    </div>
+                    
+                    <div class="admit-card-container">
+                        <div class="admit-card">
+                            <div class="admit-card-content">
+                                <div class="admit-card-header">
+                                    <div class="admit-card-title">UNIVERSITY ADMIT CARD</div>
+                                    <div class="admit-card-subtitle">Fall Semester 2025</div>
+                                </div>
+                                
+                                <div class="admit-card-body">
+                                    <div class="grid grid-cols-2 gap-6 mb-8">
+                                        <div>
+                                            <div class="admit-card-section">
+                                                <div class="admit-card-row">
+                                                    <span class="admit-card-label">Student ID:</span>
+                                                    <span class="admit-card-value" id="admitCardId">STU001</span>
+                                                </div>
+                                                <div class="admit-card-row">
+                                                    <span class="admit-card-label">Name:</span>
+                                                    <span class="admit-card-value" id="admitCardName">Ahmed Hassan</span>
+                                                </div>
+                                                <div class="admit-card-row">
+                                                    <span class="admit-card-label">Program:</span>
+                                                    <span class="admit-card-value" id="admitCardProgram">CS</span>
+                                                </div>
+                                                <div class="admit-card-row">
+                                                    <span class="admit-card-label">Semester:</span>
+                                                    <span class="admit-card-value" id="admitCardSemester">4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-24 h-24 bg-gradient-to-br from-blue-900 to-purple-600 rounded flex items-center justify-center text-white text-2xl font-bold mx-auto mb-2" id="admitCardAvatar">AH</div>
+                                            <div class="text-xs text-gray-600">Student Photo</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="admit-card-section border-t pt-4">
+                                        <p class="text-xs font-bold mb-2">EXAM SCHEDULE</p>
+                                        <div class="admit-card-row">
+                                            <span class="admit-card-label">Exam Period:</span>
+                                            <span class="admit-card-value">January 20-30, 2026</span>
+                                        </div>
+                                        <div class="admit-card-row">
+                                            <span class="admit-card-label">Registration No:</span>
+                                            <span class="admit-card-value" id="admitCardRegNo">2022-001-CS</span>
+                                        </div>
+                                        <div class="admit-card-row">
+                                            <span class="admit-card-label">Admission Date:</span>
+                                            <span class="admit-card-value" id="admitCardAdmDate">15 Sep 2022</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="admit-card-section border-t pt-4 mt-4">
+                                        <p class="text-xs font-bold mb-2">INSTRUCTIONS</p>
+                                        <ul class="text-xs space-y-1">
+                                            <li>• Carry valid ID along with admit card</li>
+                                            <li>• Report 15 minutes before exam</li>
+                                            <li>• No electronic devices allowed</li>
+                                            <li>• Exam duration: 3 hours</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="admit-card-footer">
+                                    <div>
+                                        <p class="text-xs font-bold">Date Issued:</p>
+                                        <p class="text-xs" id="admitCardIssueDate">27 Nov 2025</p>
+                                    </div>
+                                    <div class="signature-box">
+                                        <p style="height: 30px;"></p>
+                                        <div class="signature-line">Registrar</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profile Page -->
+                <div id="page-profile" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">👤 Profile</h1>
+                    
+                    <div class="card">
+                        <div class="flex items-center gap-6 mb-6">
+                            <div class="avatar" id="profileAvatar" style="width: 100px; height: 100px; font-size: 48px;">ST</div>
+                            <div>
+                                <h2 class="text-2xl font-bold" id="profileName">Student Name</h2>
+                                <p class="text-gray-600" id="profileId">STU001</p>
+                                <p class="text-gray-600" id="profileProgram">Computer Science (BS)</p>
+                            </div>
+                        </div>
+                        
+                        <button onclick="showEditProfileModal()" class="btn btn-secondary mb-6">✏️ Edit Profile</button>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <p class="text-sm text-gray-600">Email</p>
+                                <p class="font-semibold" id="profileEmail">email@university.edu</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Phone</p>
+                                <p class="font-semibold" id="profilePhone">+880 171 2345678</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Address</p>
+                                <p class="font-semibold" id="profileAddress">123 Main Street</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Blood Type</p>
+                                <p class="font-semibold" id="profileBlood">O+</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Admission Date</p>
+                                <p class="font-semibold" id="profileAdmission">15 Sep 2022</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Semester</p>
+                                <p class="font-semibold" id="profileSemester">4</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Program Change Page -->
+                <div id="page-programchange" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">🔄 Program Change</h1>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">Current Program</h3>
+                        <p class="text-lg font-semibold" id="currentProgram">Computer Science (BS)</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">Request Program Change</h3>
+                        <form id="programChangeForm">
+                            <div class="form-group">
+                                <label>Select New Program</label>
+                                <select id="newProgram" required>
+                                    <option value="">Choose a program...</option>
+                                    <!-- Will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Request</button>
+                        </form>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">📋 Request History</h3>
+                        <div id="programChangeHistory" class="text-gray-600">No requests yet</div>
+                    </div>
+                </div>
+                
+                <!-- Settings Page -->
+                <div id="page-settings" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">⚙️ Settings</h1>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">🌙 Theme</h3>
+                        <div class="flex items-center gap-4">
+                            <button onclick="toggleTheme()" class="btn bg-gray-300">Current: <span id="themeDisplay">Light</span></button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">🔐 Change Password</h3>
+                        <form id="passwordForm">
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" id="newPassword" required onkeyup="checkPasswordStrength()">
+                                <div class="password-strength" id="newPasswordStrength"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" id="confirmPassword" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </form>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">🔔 Notifications</h3>
+                        <label class="flex items-center gap-3 mb-3">
+                            <input type="checkbox" checked> Email notifications
+                        </label>
+                        <label class="flex items-center gap-3 mb-3">
+                            <input type="checkbox" checked> Course announcements
+                        </label>
+                        <label class="flex items-center gap-3">
+                            <input type="checkbox"> Marketing emails
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Special Exam Page -->
+                <div id="page-specialexam" class="hidden space-y-6">
+                    <h1 class="text-3xl font-bold">🧪 Special Exam Application</h1>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">Apply for Special Exam</h3>
+                        <form id="specialExamForm">
+                            <div class="form-group">
+                                <label>Exam Type</label>
+                                <select id="examType" required>
+                                    <option value="">Select exam type...</option>
+                                    <option value="makeup">Makeup Exam</option>
+                                    <option value="supplementary">Supplementary Exam</option>
+                                    <option value="retake">Retake Exam</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Course</label>
+                                <select id="examCourse" required>
+                                    <!-- Will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Reason</label>
+                                <textarea id="examReason" placeholder="Explain your reason..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Application</button>
+                        </form>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="font-bold mb-4">Application Status</h3>
+                        <div id="specialExamHistory" class="text-gray-600">No applications yet</div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal-backdrop">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-6">Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="editPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" id="editAddress" required>
+                </div>
+                <div class="form-group">
+                    <label>Blood Type</label>
+                    <select id="editBlood" required>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
+                <div class="flex gap-3">
+                    <button type="submit" class="btn btn-primary flex-1">Save Changes</button>
+                    <button type="button" onclick="closeEditProfileModal()" class="btn bg-gray-300 flex-1">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <script>
-        const VALID_CREDENTIALS = { email: 'user@test.com', password: 'Pass123!' };
-        let failedAttempts = 0;
-        const MAX_ATTEMPTS = 5;
-        let accountLocked = false;
-        let sessionTimeout = null;
-        const SESSION_DURATION = 30 * 60 * 1000;
-        const loginForm = document.getElementById('loginForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const togglePassword = document.getElementById('togglePassword');
-        const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
-        const attemptCounter = document.getElementById('attemptCounter');
-        const loginSection = document.getElementById('loginSection');
-        const dashboardSection = document.getElementById('dashboardSection');
-        const userEmailSpan = document.getElementById('userEmail');
-        const loginTimeSpan = document.getElementById('loginTime');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const emailError = document.getElementById('emailError');
-        const passwordError = document.getElementById('passwordError');
-        const forgotPasswordLink = document.getElementById('forgotPassword');
-        
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
-        });
-        
-        function isValidEmail(email) {
-            return email.includes('@') && email.includes('.');
-        }
-        
-        function sanitizeInput(input) {
-            const sqlPatterns = [
-                /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE)\b)/gi,
-                /(--|\#|\/\*|\*\/)/gi,
-                /('|"|;|\||&)/gi
-            ];
-            for (let pattern of sqlPatterns) {
-                if (pattern.test(input)) {
-                    return null;
-                }
-            }
-            return input;
-        }
-        
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.add('show');
-            successMessage.classList.remove('show');
-            setTimeout(() => { errorMessage.classList.remove('show'); }, 5000);
-        }
-        
-        function showSuccess(message) {
-            successMessage.textContent = message;
-            successMessage.classList.add('show');
-            errorMessage.classList.remove('show');
-            setTimeout(() => { successMessage.classList.remove('show'); }, 3000);
-        }
-        
-        function updateAttemptCounter() {
-            if (failedAttempts > 0 && failedAttempts < MAX_ATTEMPTS) {
-                attemptCounter.textContent = `⚠️ Failed attempts: ${failedAttempts}/${MAX_ATTEMPTS}. Account will lock after ${MAX_ATTEMPTS} attempts.`;
-                attemptCounter.classList.add('show');
-            } else if (accountLocked) {
-                attemptCounter.textContent = `🔒 Account locked due to too many failed attempts. Please try again later.`;
-                attemptCounter.classList.add('show');
-            } else {
-                attemptCounter.classList.remove('show');
-            }
-        }
-        
-        function startSessionTimeout() {
-            clearTimeout(sessionTimeout);
-            sessionTimeout = setTimeout(() => {
-                showError('Session expired due to inactivity. Please login again.');
-                logout();
-            }, SESSION_DURATION);
-        }
-        
-        function resetSessionTimeout() {
-            if (dashboardSection.style.display !== 'none') {
-                startSessionTimeout();
-            }
-        }
-        
-        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
-            document.addEventListener(event, resetSessionTimeout, true);
-        });
-        
-        function login(email, password) {
-            if (accountLocked) {
-                showError('Too many attempts. Account is temporarily locked.');
-                return false;
-            }
-            if (!email.trim() || !password.trim()) {
-                showError('Fields cannot be empty.');
-                return false;
-            }
-            if (!isValidEmail(email)) {
-                showError('Please enter a valid email address.');
-                emailInput.classList.add('invalid');
-                return false;
-            }
-            if (sanitizeInput(email) === null || sanitizeInput(password) === null) {
-                showError('Invalid characters detected. Please use standard text input.');
-                return false;
-            }
-            if (email === VALID_CREDENTIALS.email && password === VALID_CREDENTIALS.password) {
-                failedAttempts = 0;
-                updateAttemptCounter();
-                showDashboard(email);
-                return true;
-            } else {
-                failedAttempts++;
-                if (failedAttempts >= MAX_ATTEMPTS) {
-                    accountLocked = true;
-                    showError('Too many attempts. Account is temporarily locked.');
-                    setTimeout(() => {
-                        accountLocked = false;
-                        failedAttempts = 0;
-                        updateAttemptCounter();
-                        showSuccess('Account has been unlocked. You may try again.');
-                    }, 60000);
-                } else {
-                    showError('Invalid email or password.');
-                }
-                updateAttemptCounter();
-                return false;
-            }
-        }
-        
-        function showDashboard(email) {
-            loginSection.style.display = 'none';
-            dashboardSection.style.display = 'block';
-            userEmailSpan.textContent = email;
-            loginTimeSpan.textContent = (new Date()).toLocaleString();
-            startSessionTimeout();
-        }
-        
-        function logout() {
-            clearTimeout(sessionTimeout);
-            loginSection.style.display = 'block';
-            dashboardSection.style.display = 'none';
-            emailInput.value = '';
-            passwordInput.value = '';
-            emailInput.classList.remove('invalid');
-            passwordInput.classList.remove('invalid');
-        }
-        
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            emailInput.classList.remove('invalid');
-            passwordInput.classList.remove('invalid');
-            login(email, password);
-        });
-        
-        logoutBtn.addEventListener('click', logout);
-        
-        forgotPasswordLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            showSuccess('Password reset link would be sent to your email. (Demo feature)');
-        });
-        
-        emailInput.addEventListener('blur', function() {
-            if (this.value && !isValidEmail(this.value)) {
-                this.classList.add('invalid');
-                emailError.textContent = 'Please enter a valid email address';
-                emailError.classList.add('show');
-            } else {
-                this.classList.remove('invalid');
-                emailError.classList.remove('show');
-            }
-        });
-        
-        emailInput.addEventListener('focus', function() {
-            this.classList.remove('invalid');
-            emailError.classList.remove('show');
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
