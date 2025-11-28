@@ -160,7 +160,7 @@ function setupEventListeners() {
     });
 
     // Special Exam Course Selector
-    document.getElementById('examCourse')?.addEventListener('change', function() {
+    document.getElementById('examCourse')?.addEventListener('change', function () {
         const course = mockData.courses.find(c => c.id === this.value);
         if (course) {
             this.dataset.credits = course.credits;
@@ -298,13 +298,13 @@ function updateUserInfo() {
     document.getElementById('userName').textContent = currentUserData.name;
     document.getElementById('userProgram').textContent = currentUserData.program;
     document.getElementById('userAvatar').textContent = getInitials(currentUserData.name);
-    
+
     // Update dashboard stats
     document.getElementById('statGPA').textContent = currentUserData.gpa.toFixed(2);
     document.getElementById('statCredits').textContent = currentUserData.completedCredits;
     document.getElementById('statFees').textContent = '৳' + currentUserData.pendingFees?.toLocaleString() || '0';
     document.getElementById('statSemester').textContent = currentUserData.semester;
-    
+
     // Welcome message
     document.getElementById('dashboardWelcome').textContent = `Welcome back, ${currentUserData.name.split(' ')[0]}!`;
     document.getElementById('dashboardSubtitle').textContent = `${currentUserData.totalCredits - currentUserData.completedCredits} credits remaining to graduate`;
@@ -326,7 +326,7 @@ function loadPage(pageId) {
     });
 
     // Load page content
-    switch(pageId) {
+    switch (pageId) {
         case 'results': loadResults(); break;
         case 'billing': loadBilling(); break;
         case 'courses': loadCourses(); break;
@@ -677,7 +677,7 @@ function updateThemeDisplay() {
 
 function toggleTheme() {
     const isDark = document.body.classList.contains('dark-mode');
-    
+
     if (isDark) {
         document.body.classList.remove('dark-mode');
         document.body.classList.add('light-mode');
@@ -687,7 +687,7 @@ function toggleTheme() {
         document.body.classList.add('dark-mode');
         localStorage.setItem('theme', 'dark-mode');
     }
-    
+
     updateThemeDisplay();
     showToast('Theme changed!', 'success');
 }
@@ -695,7 +695,7 @@ function toggleTheme() {
 function checkPasswordStrength() {
     const password = document.getElementById('newPassword').value;
     const strengthDiv = document.getElementById('newPasswordStrength');
-    
+
     let strength = 0;
     if (password.length >= 6) strength++;
     if (password.match(/[A-Z]/)) strength++;

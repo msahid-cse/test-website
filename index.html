@@ -1,70 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Student Portal</title>
+    <title>University Student Portal - SQA Testing</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
     <style>
         * {
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         /* Dark Mode */
         body.dark-mode {
             background-color: #0F172A;
             color: #E2E8F0;
         }
-        
+
         body.dark-mode .card {
             background-color: #1E293B;
             border-color: #334155;
         }
-        
+
         body.dark-mode .navbar {
             background-color: #1E293B;
             border-color: #334155;
         }
-        
+
         body.dark-mode .sidebar {
             background-color: #1E293B;
             border-color: #334155;
         }
-        
+
         body.dark-mode .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.7);
         }
-        
+
         body.dark-mode .modal-content {
             background-color: #1E293B;
             color: #E2E8F0;
         }
-        
+
         /* Light Mode */
         body.light-mode {
             background-color: #F8FAFC;
             color: #1E293B;
         }
-        
+
         body.light-mode .card {
             background-color: #FFFFFF;
             border-color: #E2E8F0;
         }
-        
+
         body.light-mode .navbar {
             background-color: #FFFFFF;
             border-color: #E2E8F0;
         }
-        
+
         body.light-mode .sidebar {
             background-color: #FFFFFF;
             border-color: #E2E8F0;
         }
-        
+
         .card {
             border-radius: 12px;
             border: 1px solid currentColor;
@@ -72,23 +74,23 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        
+
         .card:hover {
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
-        
+
         .navbar {
             border-bottom: 1px solid currentColor;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        
+
         .sidebar {
             border-right: 1px solid currentColor;
             height: 100vh;
             overflow-y: auto;
         }
-        
+
         .menu-item {
             display: flex;
             align-items: center;
@@ -99,18 +101,18 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .menu-item:hover {
             background-color: #7C3AED;
             color: white;
         }
-        
+
         .menu-item.active {
             background-color: #0F3A7D;
             color: white;
             font-weight: 600;
         }
-        
+
         .btn {
             padding: 10px 20px;
             border-radius: 8px;
@@ -122,57 +124,57 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn-primary {
             background-color: #0F3A7D;
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: #0A2851;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(15, 58, 125, 0.3);
         }
-        
+
         .btn-secondary {
             background-color: #7C3AED;
             color: white;
         }
-        
+
         .btn-secondary:hover {
             background-color: #6D28D9;
             transform: translateY(-2px);
         }
-        
+
         .btn-danger {
             background-color: #EF4444;
             color: white;
         }
-        
+
         .btn-danger:hover {
             background-color: #DC2626;
         }
-        
+
         .btn-success {
             background-color: #10B981;
             color: white;
         }
-        
+
         .btn-success:hover {
             background-color: #059669;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 6px;
             font-weight: 600;
             font-size: 14px;
         }
-        
+
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -184,7 +186,7 @@
             font-size: 14px;
             transition: border-color 0.3s ease;
         }
-        
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -192,7 +194,7 @@
             border-color: #0F3A7D;
             box-shadow: 0 0 0 3px rgba(15, 58, 125, 0.1);
         }
-        
+
         .modal-backdrop {
             display: none;
             position: fixed;
@@ -204,13 +206,13 @@
             z-index: 50;
             animation: fadeIn 0.3s ease;
         }
-        
+
         .modal-backdrop.active {
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
+
         .modal-content {
             background-color: white;
             border-radius: 12px;
@@ -222,7 +224,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             animation: slideDown 0.3s ease;
         }
-        
+
         .toast {
             position: fixed;
             bottom: 20px;
@@ -234,34 +236,53 @@
             z-index: 100;
             animation: slideInUp 0.3s ease;
         }
-        
+
         .toast-success {
             background-color: #10B981;
         }
-        
+
         .toast-error {
             background-color: #EF4444;
         }
-        
+
         .toast-info {
             background-color: #3B82F6;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
-        
+
         @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        
+
         @keyframes slideInUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        
+
         .stat-card {
             background: linear-gradient(135deg, #0F3A7D 0%, #7C3AED 100%);
             color: white;
@@ -269,18 +290,18 @@
             border-radius: 12px;
             text-align: center;
         }
-        
+
         .stat-number {
             font-size: 32px;
             font-weight: bold;
             margin-bottom: 8px;
         }
-        
+
         .stat-label {
             font-size: 14px;
             opacity: 0.9;
         }
-        
+
         .avatar {
             width: 50px;
             height: 50px;
@@ -293,7 +314,7 @@
             font-weight: bold;
             font-size: 18px;
         }
-        
+
         .badge {
             display: inline-block;
             padding: 6px 12px;
@@ -301,27 +322,27 @@
             font-size: 12px;
             font-weight: 600;
         }
-        
+
         .badge-success {
             background-color: #DCFCE7;
             color: #166534;
         }
-        
+
         .badge-warning {
             background-color: #FEF3C7;
             color: #92400E;
         }
-        
+
         .badge-danger {
             background-color: #FEE2E2;
             color: #991B1B;
         }
-        
+
         .badge-info {
             background-color: #DBEAFE;
             color: #1E40AF;
         }
-        
+
         @media (max-width: 1024px) {
             .sidebar {
                 position: fixed;
@@ -333,23 +354,23 @@
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
             }
-            
+
             .sidebar.active {
                 transform: translateX(0);
             }
-            
+
             .main-content {
                 margin-left: 0;
             }
         }
-        
+
         /* A4 Admit Card Styles */
         .admit-card-container {
             max-width: 210mm;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         .admit-card {
             width: 210mm;
             height: 297mm;
@@ -357,11 +378,11 @@
             color: #000;
             padding: 40px;
             border: 1px solid #333;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
-        
+
         .admit-card::before {
             content: 'ADMIT CARD';
             position: absolute;
@@ -373,56 +394,56 @@
             z-index: 0;
             white-space: nowrap;
         }
-        
+
         .admit-card-content {
             position: relative;
             z-index: 1;
         }
-        
+
         .admit-card-header {
             text-align: center;
             margin-bottom: 30px;
             border-bottom: 2px solid #333;
             padding-bottom: 20px;
         }
-        
+
         .admit-card-title {
             font-size: 24px;
             font-weight: bold;
             color: #0F3A7D;
             margin-bottom: 5px;
         }
-        
+
         .admit-card-subtitle {
             font-size: 14px;
             color: #666;
         }
-        
+
         .admit-card-body {
             margin-bottom: 30px;
         }
-        
+
         .admit-card-section {
             margin-bottom: 20px;
         }
-        
+
         .admit-card-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-        
+
         .admit-card-label {
             font-weight: 600;
             color: #333;
             font-size: 12px;
         }
-        
+
         .admit-card-value {
             color: #666;
             font-size: 12px;
         }
-        
+
         .admit-card-footer {
             display: flex;
             justify-content: space-between;
@@ -431,201 +452,253 @@
             padding-top: 20px;
             border-top: 1px solid #ccc;
         }
-        
+
         .signature-box {
             text-align: center;
             width: 100px;
         }
-        
+
         .signature-line {
             border-top: 1px solid #333;
             font-size: 11px;
             color: #666;
             margin-top: 5px;
         }
-        
+
         @media print {
             * {
                 background: white !important;
                 color: black !important;
             }
-            
+
             .admit-card {
                 box-shadow: none;
                 max-width: 210mm;
                 max-height: 297mm;
             }
-            
+
             .no-print {
                 display: none !important;
             }
         }
-        
+
         .password-strength {
             display: flex;
             gap: 4px;
             margin-top: 8px;
         }
-        
+
         .strength-bar {
             flex: 1;
             height: 4px;
             background-color: #E5E7EB;
             border-radius: 2px;
         }
-        
-        .strength-bar.weak { background-color: #EF4444; }
-        .strength-bar.medium { background-color: #F59E0B; }
-        .strength-bar.strong { background-color: #10B981; }
+
+        .strength-bar.weak {
+            background-color: #EF4444;
+        }
+
+        .strength-bar.medium {
+            background-color: #F59E0B;
+        }
+
+        .strength-bar.strong {
+            background-color: #10B981;
+        }
     </style>
 </head>
+
 <body class="light-mode">
     <!-- Login Page -->
-    <div id="loginPage" class="hidden">
+    <div id="loginPage" class="login-page hidden" data-testid="login-page">
         <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
             <div class="w-full max-w-md">
-                <div class="card">
+                <div class="card login-card">
                     <div class="text-center mb-8">
-                        <div class="text-4xl mb-3">🎓</div>
-                        <h1 class="text-3xl font-bold text-blue-900 mb-2">Student Portal</h1>
-                        <p class="text-gray-600">University Management System</p>
+                        <div class="text-4xl mb-3" data-testid="portal-icon">🎓</div>
+                        <h1 class="text-3xl font-bold text-blue-900 mb-2" id="portalTitle" data-testid="portal-title">
+                            Student Portal</h1>
+                        <p class="text-gray-600" id="portalSubtitle" data-testid="portal-subtitle">University Management
+                            System</p>
                     </div>
-                    
+
                     <div class="mb-6">
-                        <h2 class="text-lg font-bold mb-4">Login</h2>
-                        <form id="loginForm">
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input type="text" id="studentId" placeholder="STU001" required>
+                        <h2 class="text-lg font-bold mb-4" id="loginHeading" data-testid="login-heading">Login</h2>
+                        <form id="loginForm" class="login-form" data-testid="login-form">
+                            <div class="form-group" id="studentIdGroup">
+                                <label for="studentId" id="studentIdLabel" data-testid="student-id-label">Student
+                                    ID</label>
+                                <input type="text" id="studentId" name="studentId" class="student-id-input"
+                                    data-testid="student-id-input" placeholder="STU001" aria-label="Student ID"
+                                    aria-required="true" required>
+                                <span class="error-message" id="studentIdError" data-testid="student-id-error"></span>
                             </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" id="password" placeholder="Enter password" required>
+                            <div class="form-group" id="passwordGroup">
+                                <label for="password" id="passwordLabel" data-testid="password-label">Password</label>
+                                <input type="password" id="password" name="password" class="password-input"
+                                    data-testid="password-input" placeholder="Enter password" aria-label="Password"
+                                    aria-required="true" required>
+                                <span class="error-message" id="passwordError" data-testid="password-error"></span>
                             </div>
-                            <button type="submit" class="btn btn-primary w-full">Sign In</button>
+                            <button type="submit" id="loginButton" class="btn btn-primary w-full login-submit-btn"
+                                data-testid="login-submit-btn" aria-label="Sign In">
+                                Sign In
+                            </button>
                         </form>
                     </div>
-                    
-                    <div class="border-t pt-6">
-                        <h3 class="font-bold mb-3">Demo Accounts</h3>
-                        <div class="text-sm space-y-1">
-                            <p><strong>All IDs:</strong> STU001 - STU005</p>
-                            <p><strong>All Passwords:</strong> 123456</p>
+
+                    <div class="border-t pt-6" id="demoAccountsSection" data-testid="demo-accounts-section">
+                        <h3 class="font-bold mb-3" id="demoAccountsHeading" data-testid="demo-accounts-heading">Demo
+                            Accounts</h3>
+                        <div class="text-sm space-y-1" id="demoAccountsInfo">
+                            <p id="demoIds" data-testid="demo-ids"><strong>All IDs:</strong> STU001 - STU005</p>
+                            <p id="demoPasswords" data-testid="demo-passwords"><strong>All Passwords:</strong> 123456
+                            </p>
                         </div>
                     </div>
-                    
+
                     <div class="mt-6">
-                        <button type="button" onclick="showRegisterModal()" class="btn btn-secondary w-full">Create New Account</button>
+                        <button type="button" id="showRegisterBtn" class="btn btn-secondary w-full register-btn"
+                            data-testid="show-register-btn" onclick="showRegisterModal()"
+                            aria-label="Create New Account">
+                            Create New Account
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Register Modal -->
-    <div id="registerModal" class="modal-backdrop">
+    <div id="registerModal" class="modal-backdrop" data-testid="register-modal">
         <div class="modal-content">
-            <h2 class="text-2xl font-bold mb-6">Create Account</h2>
-            <form id="registerForm">
+            <h2 class="text-2xl font-bold mb-6" id="registerHeading" data-testid="register-heading">Create Account</h2>
+            <form id="registerForm" data-testid="register-form">
                 <div class="form-group">
-                    <label>Student ID</label>
-                    <input type="text" id="regStudentId" placeholder="STU..." required>
+                    <label for="regStudentId">Student ID</label>
+                    <input type="text" id="regStudentId" name="regStudentId" data-testid="reg-student-id"
+                        placeholder="STU..." required>
                 </div>
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="regName" placeholder="Your full name" required>
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" name="regName" data-testid="reg-name" placeholder="Your full name"
+                        required>
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="regEmail" placeholder="your@university.edu" required>
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" name="regEmail" data-testid="reg-email"
+                        placeholder="your@university.edu" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="regPassword" placeholder="At least 6 characters" required>
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" name="regPassword" data-testid="reg-password"
+                        placeholder="At least 6 characters" required>
                     <div class="password-strength" id="passwordStrength"></div>
                 </div>
                 <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" id="regConfirmPassword" placeholder="Confirm password" required>
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" name="regConfirmPassword"
+                        data-testid="reg-confirm-password" placeholder="Confirm password" required>
                 </div>
                 <div class="flex gap-3">
-                    <button type="submit" class="btn btn-primary flex-1">Register</button>
-                    <button type="button" onclick="closeRegisterModal()" class="btn bg-gray-300 flex-1">Cancel</button>
+                    <button type="submit" class="btn btn-primary flex-1"
+                        data-testid="register-submit-btn">Register</button>
+                    <button type="button" onclick="closeRegisterModal()" class="btn bg-gray-300 flex-1"
+                        data-testid="register-cancel-btn">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
-    
+
     <!-- Main Dashboard -->
-    <div id="dashboard" class="hidden h-screen flex flex-col">
+    <div id="dashboard" class="hidden h-screen flex flex-col" data-testid="dashboard">
         <!-- Navbar -->
-        <nav class="navbar flex items-center justify-between px-6 py-4 sticky top-0 z-30">
+        <nav class="navbar flex items-center justify-between px-6 py-4 sticky top-0 z-30" id="mainNavbar"
+            data-testid="main-navbar">
             <div class="flex items-center gap-4">
-                <button id="mobileMenuToggle" class="lg:hidden text-2xl">☰</button>
-                <h1 class="text-2xl font-bold text-blue-900">Student Portal</h1>
+                <button id="mobileMenuToggle" class="lg:hidden text-2xl" data-testid="mobile-menu-toggle"
+                    aria-label="Toggle Menu">☰</button>
+                <h1 class="text-2xl font-bold text-blue-900" id="navbarTitle" data-testid="navbar-title">Student Portal
+                </h1>
             </div>
             <div class="flex items-center gap-4">
-                <button id="themeToggle" class="btn bg-gray-200 p-2">🌙</button>
+                <button id="themeToggle" class="btn bg-gray-200 p-2" data-testid="theme-toggle"
+                    aria-label="Toggle Theme">🌙</button>
                 <div class="flex items-center gap-3">
                     <div class="text-right hidden sm:block">
-                        <p class="font-semibold" id="userName">Student</p>
-                        <p class="text-sm text-gray-600" id="userProgram">Program</p>
+                        <p class="font-semibold" id="userName" data-testid="user-name">Student</p>
+                        <p class="text-sm text-gray-600" id="userProgram" data-testid="user-program">Program</p>
                     </div>
-                    <div class="avatar" id="userAvatar">ST</div>
+                    <div class="avatar" id="userAvatar" data-testid="user-avatar">ST</div>
                 </div>
-                <button id="logoutBtn" class="btn btn-danger">Logout</button>
+                <button id="logoutBtn" class="btn btn-danger" data-testid="logout-btn"
+                    aria-label="Logout">Logout</button>
             </div>
         </nav>
-        
+
         <div class="flex flex-1 overflow-hidden">
             <!-- Sidebar -->
-            <aside id="sidebar" class="w-64 sidebar hidden lg:block overflow-y-auto">
+            <aside id="sidebar" class="w-64 sidebar hidden lg:block overflow-y-auto" data-testid="sidebar">
                 <div class="p-4">
                     <h3 class="text-sm font-bold text-gray-600 mb-4">MENU</h3>
-                    <nav class="space-y-2">
-                        <a href="#" class="menu-item active" data-page="dashboard">📊 Dashboard</a>
-                        <a href="#" class="menu-item" data-page="results">📈 Results</a>
-                        <a href="#" class="menu-item" data-page="billing">💳 Billing</a>
-                        <a href="#" class="menu-item" data-page="courses">📚 Courses</a>
-                        <a href="#" class="menu-item" data-page="routine">📅 Class Routine</a>
-                        <a href="#" class="menu-item" data-page="faculty">👨‍🏫 Faculty</a>
-                        <a href="#" class="menu-item" data-page="admitcard">🎫 Admit Card</a>
-                        <a href="#" class="menu-item" data-page="specialexam">🧪 Special Exam</a>
-                        <a href="#" class="menu-item" data-page="programchange">🔄 Program Change</a>
-                        <a href="#" class="menu-item" data-page="profile">👤 Profile</a>
-                        <a href="#" class="menu-item" data-page="settings">⚙️ Settings</a>
+                    <nav class="space-y-2" id="sidebarNav">
+                        <a href="#" class="menu-item active" data-page="dashboard" data-testid="menu-dashboard"
+                            id="menuDashboard">📊 Dashboard</a>
+                        <a href="#" class="menu-item" data-page="results" data-testid="menu-results" id="menuResults">📈
+                            Results</a>
+                        <a href="#" class="menu-item" data-page="billing" data-testid="menu-billing" id="menuBilling">💳
+                            Billing</a>
+                        <a href="#" class="menu-item" data-page="courses" data-testid="menu-courses" id="menuCourses">📚
+                            Courses</a>
+                        <a href="#" class="menu-item" data-page="routine" data-testid="menu-routine" id="menuRoutine">📅
+                            Class Routine</a>
+                        <a href="#" class="menu-item" data-page="faculty" data-testid="menu-faculty"
+                            id="menuFaculty">👨‍🏫 Faculty</a>
+                        <a href="#" class="menu-item" data-page="admitcard" data-testid="menu-admitcard"
+                            id="menuAdmitCard">🎫 Admit Card</a>
+                        <a href="#" class="menu-item" data-page="specialexam" data-testid="menu-specialexam"
+                            id="menuSpecialExam">🧪 Special Exam</a>
+                        <a href="#" class="menu-item" data-page="programchange" data-testid="menu-programchange"
+                            id="menuProgramChange">🔄 Program Change</a>
+                        <a href="#" class="menu-item" data-page="profile" data-testid="menu-profile" id="menuProfile">👤
+                            Profile</a>
+                        <a href="#" class="menu-item" data-page="settings" data-testid="menu-settings"
+                            id="menuSettings">⚙️ Settings</a>
                     </nav>
                 </div>
             </aside>
-            
+
             <!-- Main Content -->
-            <main id="mainContent" class="flex-1 overflow-y-auto p-6">
+            <main id="mainContent" class="flex-1 overflow-y-auto p-6" data-testid="main-content">
                 <!-- Dashboard Page -->
-                <div id="page-dashboard" class="space-y-6">
-                    <div class="bg-gradient-to-r from-blue-900 to-purple-600 text-white p-8 rounded-12">
-                        <h1 class="text-4xl font-bold mb-2" id="dashboardWelcome">Welcome back!</h1>
-                        <p id="dashboardSubtitle">You have 15 credits remaining to graduate</p>
+                <div id="page-dashboard" class="space-y-6" data-testid="page-dashboard">
+                    <div class="bg-gradient-to-r from-blue-900 to-purple-600 text-white p-8 rounded-lg">
+                        <h1 class="text-4xl font-bold mb-2" id="dashboardWelcome" data-testid="dashboard-welcome">
+                            Welcome back!</h1>
+                        <p id="dashboardSubtitle" data-testid="dashboard-subtitle">You have 15 credits remaining to
+                            graduate</p>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="stat-card">
-                            <div class="stat-number" id="statGPA">3.78</div>
+                        <div class="stat-card" data-testid="stat-gpa-card">
+                            <div class="stat-number" id="statGPA" data-testid="stat-gpa">3.78</div>
                             <div class="stat-label">Current GPA</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="statCredits">45</div>
+                        <div class="stat-card" data-testid="stat-credits-card">
+                            <div class="stat-number" id="statCredits" data-testid="stat-credits">45</div>
                             <div class="stat-label">Completed Credits</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="statFees">৳15,000</div>
+                        <div class="stat-card" data-testid="stat-fees-card">
+                            <div class="stat-number" id="statFees" data-testid="stat-fees">৳15,000</div>
                             <div class="stat-label">Pending Fees</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="statSemester">4</div>
+                        <div class="stat-card" data-testid="stat-semester-card">
+                            <div class="stat-number" id="statSemester" data-testid="stat-semester">4</div>
                             <div class="stat-label">Current Semester</div>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <h2 class="text-xl font-bold mb-4">📌 Important Announcements</h2>
                         <div class="space-y-3">
@@ -644,14 +717,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Results Page -->
-                <div id="page-results" class="hidden space-y-6">
+                <div id="page-results" class="hidden space-y-6" data-testid="page-results">
                     <h1 class="text-3xl font-bold">📈 Results & Grades</h1>
-                    
+
                     <div class="card">
                         <h2 class="text-xl font-bold mb-4">Current Semester Results</h2>
-                        <table class="w-full text-sm">
+                        <table class="w-full text-sm" id="resultsTableContainer" data-testid="results-table">
                             <thead class="border-b-2">
                                 <tr>
                                     <th class="text-left py-2">Course Code</th>
@@ -661,62 +734,70 @@
                                     <th class="text-center py-2">GPA</th>
                                 </tr>
                             </thead>
-                            <tbody id="resultsTable">
+                            <tbody id="resultsTable" data-testid="results-table-body">
                                 <!-- Will be populated by JavaScript -->
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="card">
                             <h3 class="font-bold mb-3">📊 Current Semester GPA</h3>
-                            <p class="text-4xl font-bold text-blue-900" id="currentGPA">3.78</p>
+                            <p class="text-4xl font-bold text-blue-900" id="currentGPA" data-testid="current-gpa">3.78
+                            </p>
                         </div>
                         <div class="card">
                             <h3 class="font-bold mb-3">📈 Cumulative GPA</h3>
-                            <p class="text-4xl font-bold text-purple-600" id="cumulativeGPA">3.78</p>
+                            <p class="text-4xl font-bold text-purple-600" id="cumulativeGPA"
+                                data-testid="cumulative-gpa">3.78</p>
                         </div>
                     </div>
-                    
+
                     <div class="card">
-                        <button onclick="downloadTranscript()" class="btn btn-primary">⬇️ Download Transcript</button>
+                        <button onclick="downloadTranscript()" class="btn btn-primary" id="downloadTranscriptBtn"
+                            data-testid="download-transcript-btn">⬇️ Download Transcript</button>
                     </div>
                 </div>
-                
+
                 <!-- Billing Page -->
-                <div id="page-billing" class="hidden space-y-6">
+                <div id="page-billing" class="hidden space-y-6" data-testid="page-billing">
                     <h1 class="text-3xl font-bold">💳 Billing & Payments</h1>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="card bg-red-50 border-red-200">
                             <h3 class="font-bold mb-2">Outstanding Fees</h3>
-                            <p class="text-3xl font-bold text-red-600" id="pendingFeeDisplay">৳15,000</p>
+                            <p class="text-3xl font-bold text-red-600" id="pendingFeeDisplay"
+                                data-testid="pending-fee-display">৳15,000</p>
                         </div>
                         <div class="card bg-green-50 border-green-200">
                             <h3 class="font-bold mb-2">Total Paid</h3>
-                            <p class="text-3xl font-bold text-green-600" id="paidFeeDisplay">৳85,000</p>
+                            <p class="text-3xl font-bold text-green-600" id="paidFeeDisplay"
+                                data-testid="paid-fee-display">৳85,000</p>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">Make Payment</h3>
-                        <form id="paymentForm">
+                        <form id="paymentForm" data-testid="payment-form">
                             <div class="form-group">
-                                <label>Payment Method</label>
-                                <select id="paymentMethod" required>
-                                    <option>Bank Transfer</option>
-                                    <option>Card Payment</option>
-                                    <option>Mobile Banking (bKash/Nagad)</option>
+                                <label for="paymentMethod">Payment Method</label>
+                                <select id="paymentMethod" name="paymentMethod" data-testid="payment-method" required>
+                                    <option value="">Select method...</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                    <option value="Card Payment">Card Payment</option>
+                                    <option value="Mobile Banking">Mobile Banking (bKash/Nagad)</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Amount (৳)</label>
-                                <input type="number" id="paymentAmount" placeholder="Enter amount" required>
+                                <label for="paymentAmount">Amount (৳)</label>
+                                <input type="number" id="paymentAmount" name="paymentAmount"
+                                    data-testid="payment-amount" placeholder="Enter amount" min="1" required>
                             </div>
-                            <button type="submit" class="btn btn-success">💰 Pay Now</button>
+                            <button type="submit" class="btn btn-success" id="payNowBtn" data-testid="pay-now-btn">💰
+                                Pay Now</button>
                         </form>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">📋 Payment History</h3>
                         <table class="w-full text-sm">
@@ -728,36 +809,36 @@
                                     <th class="text-left py-2">Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="paymentHistory">
+                            <tbody id="paymentHistory" data-testid="payment-history">
                                 <!-- Will be populated by JavaScript -->
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
+
                 <!-- Courses Page -->
-                <div id="page-courses" class="hidden space-y-6">
+                <div id="page-courses" class="hidden space-y-6" data-testid="page-courses">
                     <h1 class="text-3xl font-bold">📚 Courses</h1>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">🔍 Available Courses</h3>
-                        <div id="coursesGrid" class="space-y-4">
+                        <div id="coursesGrid" class="space-y-4" data-testid="courses-grid">
                             <!-- Will be populated by JavaScript -->
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">✅ Registered Courses</h3>
-                        <div id="registeredCourses" class="space-y-4">
+                        <div id="registeredCourses" class="space-y-4" data-testid="registered-courses">
                             <!-- Will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Class Routine -->
-                <div id="page-routine" class="hidden space-y-6">
+                <div id="page-routine" class="hidden space-y-6" data-testid="page-routine">
                     <h1 class="text-3xl font-bold">📅 Class Routine</h1>
-                    
+
                     <div class="card">
                         <table class="w-full text-sm">
                             <thead class="border-b-2">
@@ -769,35 +850,40 @@
                                     <th class="text-left py-2">Room</th>
                                 </tr>
                             </thead>
-                            <tbody id="routineTable">
+                            <tbody id="routineTable" data-testid="routine-table">
                                 <!-- Will be populated by JavaScript -->
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
+
                 <!-- Faculty Page -->
-                <div id="page-faculty" class="hidden space-y-6">
+                <div id="page-faculty" class="hidden space-y-6" data-testid="page-faculty">
                     <h1 class="text-3xl font-bold">👨‍🏫 Faculty Directory</h1>
-                    
+
                     <div class="card">
-                        <input type="text" id="facultySearch" placeholder="Search faculty..." class="w-full p-2 border rounded-lg" onkeyup="filterFaculty()">
+                        <input type="text" id="facultySearch" data-testid="faculty-search"
+                            placeholder="Search faculty..." class="w-full p-2 border rounded-lg"
+                            onkeyup="filterFaculty()">
                     </div>
-                    
-                    <div id="facultyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <div id="facultyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        data-testid="faculty-grid">
                         <!-- Will be populated by JavaScript -->
                     </div>
                 </div>
-                
+
                 <!-- Admit Card Page -->
-                <div id="page-admitcard" class="hidden space-y-6">
+                <div id="page-admitcard" class="hidden space-y-6" data-testid="page-admitcard">
                     <h1 class="text-3xl font-bold">🎫 Admit Card</h1>
-                    
+
                     <div class="flex gap-4 mb-6 no-print">
-                        <button onclick="window.print()" class="btn btn-primary">🖨️ Print</button>
-                        <button onclick="downloadAdmitCardPDF()" class="btn btn-secondary">⬇️ Download PDF</button>
+                        <button onclick="window.print()" class="btn btn-primary" id="printAdmitCardBtn"
+                            data-testid="print-admit-card-btn">🖨️ Print</button>
+                        <button onclick="downloadAdmitCardPDF()" class="btn btn-secondary" id="downloadAdmitCardBtn"
+                            data-testid="download-admit-card-btn">⬇️ Download PDF</button>
                     </div>
-                    
+
                     <div class="admit-card-container">
                         <div class="admit-card">
                             <div class="admit-card-content">
@@ -805,35 +891,40 @@
                                     <div class="admit-card-title">UNIVERSITY ADMIT CARD</div>
                                     <div class="admit-card-subtitle">Fall Semester 2025</div>
                                 </div>
-                                
+
                                 <div class="admit-card-body">
                                     <div class="grid grid-cols-2 gap-6 mb-8">
                                         <div>
                                             <div class="admit-card-section">
                                                 <div class="admit-card-row">
                                                     <span class="admit-card-label">Student ID:</span>
-                                                    <span class="admit-card-value" id="admitCardId">STU001</span>
+                                                    <span class="admit-card-value" id="admitCardId"
+                                                        data-testid="admit-card-id">STU001</span>
                                                 </div>
                                                 <div class="admit-card-row">
                                                     <span class="admit-card-label">Name:</span>
-                                                    <span class="admit-card-value" id="admitCardName">Ahmed Hassan</span>
+                                                    <span class="admit-card-value" id="admitCardName"
+                                                        data-testid="admit-card-name">Ahmed Hassan</span>
                                                 </div>
                                                 <div class="admit-card-row">
                                                     <span class="admit-card-label">Program:</span>
-                                                    <span class="admit-card-value" id="admitCardProgram">CS</span>
+                                                    <span class="admit-card-value" id="admitCardProgram"
+                                                        data-testid="admit-card-program">CS</span>
                                                 </div>
                                                 <div class="admit-card-row">
                                                     <span class="admit-card-label">Semester:</span>
-                                                    <span class="admit-card-value" id="admitCardSemester">4</span>
+                                                    <span class="admit-card-value" id="admitCardSemester"
+                                                        data-testid="admit-card-semester">4</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <div class="w-24 h-24 bg-gradient-to-br from-blue-900 to-purple-600 rounded flex items-center justify-center text-white text-2xl font-bold mx-auto mb-2" id="admitCardAvatar">AH</div>
+                                            <div class="w-24 h-24 bg-gradient-to-br from-blue-900 to-purple-600 rounded flex items-center justify-center text-white text-2xl font-bold mx-auto mb-2"
+                                                id="admitCardAvatar" data-testid="admit-card-avatar">AH</div>
                                             <div class="text-xs text-gray-600">Student Photo</div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="admit-card-section border-t pt-4">
                                         <p class="text-xs font-bold mb-2">EXAM SCHEDULE</p>
                                         <div class="admit-card-row">
@@ -842,14 +933,16 @@
                                         </div>
                                         <div class="admit-card-row">
                                             <span class="admit-card-label">Registration No:</span>
-                                            <span class="admit-card-value" id="admitCardRegNo">2022-001-CS</span>
+                                            <span class="admit-card-value" id="admitCardRegNo"
+                                                data-testid="admit-card-reg-no">2022-001-CS</span>
                                         </div>
                                         <div class="admit-card-row">
                                             <span class="admit-card-label">Admission Date:</span>
-                                            <span class="admit-card-value" id="admitCardAdmDate">15 Sep 2022</span>
+                                            <span class="admit-card-value" id="admitCardAdmDate"
+                                                data-testid="admit-card-adm-date">15 Sep 2022</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="admit-card-section border-t pt-4 mt-4">
                                         <p class="text-xs font-bold mb-2">INSTRUCTIONS</p>
                                         <ul class="text-xs space-y-1">
@@ -860,11 +953,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                                
+
                                 <div class="admit-card-footer">
                                     <div>
                                         <p class="text-xs font-bold">Date Issued:</p>
-                                        <p class="text-xs" id="admitCardIssueDate">27 Nov 2025</p>
+                                        <p class="text-xs" id="admitCardIssueDate" data-testid="admit-card-issue-date">
+                                            27 Nov 2025</p>
                                     </div>
                                     <div class="signature-box">
                                         <p style="height: 30px;"></p>
@@ -875,136 +969,155 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Profile Page -->
-                <div id="page-profile" class="hidden space-y-6">
+                <div id="page-profile" class="hidden space-y-6" data-testid="page-profile">
                     <h1 class="text-3xl font-bold">👤 Profile</h1>
-                    
+
                     <div class="card">
                         <div class="flex items-center gap-6 mb-6">
-                            <div class="avatar" id="profileAvatar" style="width: 100px; height: 100px; font-size: 48px;">ST</div>
+                            <div class="avatar" id="profileAvatar" data-testid="profile-avatar"
+                                style="width: 100px; height: 100px; font-size: 48px;">ST</div>
                             <div>
-                                <h2 class="text-2xl font-bold" id="profileName">Student Name</h2>
-                                <p class="text-gray-600" id="profileId">STU001</p>
-                                <p class="text-gray-600" id="profileProgram">Computer Science (BS)</p>
+                                <h2 class="text-2xl font-bold" id="profileName" data-testid="profile-name">Student Name
+                                </h2>
+                                <p class="text-gray-600" id="profileId" data-testid="profile-id">STU001</p>
+                                <p class="text-gray-600" id="profileProgram" data-testid="profile-program">Computer
+                                    Science (BS)</p>
                             </div>
                         </div>
-                        
-                        <button onclick="showEditProfileModal()" class="btn btn-secondary mb-6">✏️ Edit Profile</button>
-                        
+
+                        <button onclick="showEditProfileModal()" class="btn btn-secondary mb-6" id="editProfileBtn"
+                            data-testid="edit-profile-btn">✏️ Edit Profile</button>
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <p class="text-sm text-gray-600">Email</p>
-                                <p class="font-semibold" id="profileEmail">email@university.edu</p>
+                                <p class="font-semibold" id="profileEmail" data-testid="profile-email">
+                                    email@university.edu</p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Phone</p>
-                                <p class="font-semibold" id="profilePhone">+880 171 2345678</p>
+                                <p class="font-semibold" id="profilePhone" data-testid="profile-phone">+880 171 2345678
+                                </p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Address</p>
-                                <p class="font-semibold" id="profileAddress">123 Main Street</p>
+                                <p class="font-semibold" id="profileAddress" data-testid="profile-address">123 Main
+                                    Street</p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Blood Type</p>
-                                <p class="font-semibold" id="profileBlood">O+</p>
+                                <p class="font-semibold" id="profileBlood" data-testid="profile-blood">O+</p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Admission Date</p>
-                                <p class="font-semibold" id="profileAdmission">15 Sep 2022</p>
+                                <p class="font-semibold" id="profileAdmission" data-testid="profile-admission">15 Sep
+                                    2022</p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Semester</p>
-                                <p class="font-semibold" id="profileSemester">4</p>
+                                <p class="font-semibold" id="profileSemester" data-testid="profile-semester">4</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Program Change Page -->
-                <div id="page-programchange" class="hidden space-y-6">
+                <div id="page-programchange" class="hidden space-y-6" data-testid="page-programchange">
                     <h1 class="text-3xl font-bold">🔄 Program Change</h1>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">Current Program</h3>
-                        <p class="text-lg font-semibold" id="currentProgram">Computer Science (BS)</p>
+                        <p class="text-lg font-semibold" id="currentProgram" data-testid="current-program">Computer
+                            Science (BS)</p>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">Request Program Change</h3>
-                        <form id="programChangeForm">
+                        <form id="programChangeForm" data-testid="program-change-form">
                             <div class="form-group">
-                                <label>Select New Program</label>
-                                <select id="newProgram" required>
+                                <label for="newProgram">Select New Program</label>
+                                <select id="newProgram" name="newProgram" data-testid="new-program" required>
                                     <option value="">Choose a program...</option>
                                     <!-- Will be populated by JavaScript -->
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit Request</button>
+                            <button type="submit" class="btn btn-primary" data-testid="program-change-submit-btn">Submit
+                                Request</button>
                         </form>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">📋 Request History</h3>
-                        <div id="programChangeHistory" class="text-gray-600">No requests yet</div>
+                        <div id="programChangeHistory" class="text-gray-600" data-testid="program-change-history">No
+                            requests yet</div>
                     </div>
                 </div>
-                
+
                 <!-- Settings Page -->
-                <div id="page-settings" class="hidden space-y-6">
+                <div id="page-settings" class="hidden space-y-6" data-testid="page-settings">
                     <h1 class="text-3xl font-bold">⚙️ Settings</h1>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">🌙 Theme</h3>
                         <div class="flex items-center gap-4">
-                            <button onclick="toggleTheme()" class="btn bg-gray-300">Current: <span id="themeDisplay">Light</span></button>
+                            <button onclick="toggleTheme()" class="btn bg-gray-300" id="themeToggleBtn"
+                                data-testid="theme-toggle-btn">Current: <span id="themeDisplay"
+                                    data-testid="theme-display">Light</span></button>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">🔐 Change Password</h3>
-                        <form id="passwordForm">
+                        <form id="passwordForm" data-testid="password-form">
                             <div class="form-group">
-                                <label>Current Password</label>
-                                <input type="password" id="currentPassword" required>
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" name="currentPassword"
+                                    data-testid="current-password" required>
                             </div>
                             <div class="form-group">
-                                <label>New Password</label>
-                                <input type="password" id="newPassword" required onkeyup="checkPasswordStrength()">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" name="newPassword" data-testid="new-password"
+                                    required onkeyup="checkPasswordStrength()">
                                 <div class="password-strength" id="newPasswordStrength"></div>
                             </div>
                             <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password" id="confirmPassword" required>
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword"
+                                    data-testid="confirm-password" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Change Password</button>
+                            <button type="submit" class="btn btn-primary" data-testid="change-password-btn">Change
+                                Password</button>
                         </form>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">🔔 Notifications</h3>
                         <label class="flex items-center gap-3 mb-3">
-                            <input type="checkbox" checked> Email notifications
+                            <input type="checkbox" id="emailNotifications" data-testid="email-notifications" checked>
+                            Email notifications
                         </label>
                         <label class="flex items-center gap-3 mb-3">
-                            <input type="checkbox" checked> Course announcements
+                            <input type="checkbox" id="courseAnnouncements" data-testid="course-announcements" checked>
+                            Course announcements
                         </label>
                         <label class="flex items-center gap-3">
-                            <input type="checkbox"> Marketing emails
+                            <input type="checkbox" id="marketingEmails" data-testid="marketing-emails"> Marketing emails
                         </label>
                     </div>
                 </div>
-                
+
                 <!-- Special Exam Page -->
-                <div id="page-specialexam" class="hidden space-y-6">
+                <div id="page-specialexam" class="hidden space-y-6" data-testid="page-specialexam">
                     <h1 class="text-3xl font-bold">🧪 Special Exam Application</h1>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">Apply for Special Exam</h3>
-                        <form id="specialExamForm">
+                        <form id="specialExamForm" data-testid="special-exam-form">
                             <div class="form-group">
-                                <label>Exam Type</label>
-                                <select id="examType" required>
+                                <label for="examType">Exam Type</label>
+                                <select id="examType" name="examType" data-testid="exam-type" required>
                                     <option value="">Select exam type...</option>
                                     <option value="makeup">Makeup Exam</option>
                                     <option value="supplementary">Supplementary Exam</option>
@@ -1012,44 +1125,47 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Course</label>
-                                <select id="examCourse" required>
+                                <label for="examCourse">Course</label>
+                                <select id="examCourse" name="examCourse" data-testid="exam-course" required>
                                     <!-- Will be populated by JavaScript -->
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Reason</label>
-                                <textarea id="examReason" placeholder="Explain your reason..." required></textarea>
+                                <label for="examReason">Reason</label>
+                                <textarea id="examReason" name="examReason" data-testid="exam-reason"
+                                    placeholder="Explain your reason..." required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit Application</button>
+                            <button type="submit" class="btn btn-primary" data-testid="special-exam-submit-btn">Submit
+                                Application</button>
                         </form>
                     </div>
-                    
+
                     <div class="card">
                         <h3 class="font-bold mb-4">Application Status</h3>
-                        <div id="specialExamHistory" class="text-gray-600">No applications yet</div>
+                        <div id="specialExamHistory" class="text-gray-600" data-testid="special-exam-history">No
+                            applications yet</div>
                     </div>
                 </div>
             </main>
         </div>
     </div>
-    
+
     <!-- Edit Profile Modal -->
-    <div id="editProfileModal" class="modal-backdrop">
+    <div id="editProfileModal" class="modal-backdrop" data-testid="edit-profile-modal">
         <div class="modal-content">
             <h2 class="text-2xl font-bold mb-6">Edit Profile</h2>
-            <form id="editProfileForm">
+            <form id="editProfileForm" data-testid="edit-profile-form">
                 <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="editPhone" required>
+                    <label for="editPhone">Phone</label>
+                    <input type="tel" id="editPhone" name="editPhone" data-testid="edit-phone" required>
                 </div>
                 <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" id="editAddress" required>
+                    <label for="editAddress">Address</label>
+                    <input type="text" id="editAddress" name="editAddress" data-testid="edit-address" required>
                 </div>
                 <div class="form-group">
-                    <label>Blood Type</label>
-                    <select id="editBlood" required>
+                    <label for="editBlood">Blood Type</label>
+                    <select id="editBlood" name="editBlood" data-testid="edit-blood" required>
                         <option value="O+">O+</option>
                         <option value="O-">O-</option>
                         <option value="A+">A+</option>
@@ -1061,8 +1177,10 @@
                     </select>
                 </div>
                 <div class="flex gap-3">
-                    <button type="submit" class="btn btn-primary flex-1">Save Changes</button>
-                    <button type="button" onclick="closeEditProfileModal()" class="btn bg-gray-300 flex-1">Cancel</button>
+                    <button type="submit" class="btn btn-primary flex-1" data-testid="edit-profile-save-btn">Save
+                        Changes</button>
+                    <button type="button" onclick="closeEditProfileModal()" class="btn bg-gray-300 flex-1"
+                        data-testid="edit-profile-cancel-btn">Cancel</button>
                 </div>
             </form>
         </div>
@@ -1070,4 +1188,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
